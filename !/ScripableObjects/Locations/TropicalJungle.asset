@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8c7da8028afe54d892ec219c12ae71, type: 3}
+  m_Name: TropicalJungle
+  m_EditorClassIdentifier: 
+  locationPartsList:
+  - itemsSOList:
+    - itemSO: {fileID: 11400000, guid: b10bbffc3e8cbeb47a8e5abb76eeb0fc, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 29ce6b3630244cc4f829b8a7428fd8d3, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: ef4d4eb1144e4e24587df84698929061, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 70609473f4a716748b5dac1e06f0b79c, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: c39cf59876801cb40b7543da644b21e0, type: 2}
+      spawnChance: 1
+    lootPointsCount: 3
+    gridDensityType: 0
+    minItemsCount: 5
+    maxItemsCount: 10
+    environmentItemsSOList:
+    - itemSO: {fileID: 11400000, guid: 8725fdb34eed80445b3ca7d6a56c4dc1, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: b6e9dcba9bbd777458251d5077865121, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 32009fb8c5b26f64aafc49f1c13e0b5f, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: af4593d22e8587c469fc3895b3b195c0, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 0b31abaa4ebb5f84286f6f9a75cebc0b, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 1cd32c7f794b1e14b91557cb60003a12, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: c20ce24cce0c6c14d8f2c25a5bc742bc, type: 2}
+      spawnChance: 2
+    environmentDensity: 6
+  - itemsSOList:
+    - itemSO: {fileID: 11400000, guid: 5d3c9f142ec0af84ba7be68c8b12d692, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: a435528cb0578324ebbb82dc51ee819a, type: 2}
+      spawnChance: 4
+    - itemSO: {fileID: 11400000, guid: 2a74987a3710bfa41b1b694825a655a1, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: e10f9712843c516439f947c6a62a4cb5, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: c39cf59876801cb40b7543da644b21e0, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: c26fc4943b3ecf64da6974e125ad5eec, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: 04e793b471106834ebbeb6b52e6e3164, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 70609473f4a716748b5dac1e06f0b79c, type: 2}
+      spawnChance: 3
+    lootPointsCount: 3
+    gridDensityType: 1
+    minItemsCount: 5
+    maxItemsCount: 10
+    environmentItemsSOList:
+    - itemSO: {fileID: 11400000, guid: 8725fdb34eed80445b3ca7d6a56c4dc1, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: b6e9dcba9bbd777458251d5077865121, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 32009fb8c5b26f64aafc49f1c13e0b5f, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: af4593d22e8587c469fc3895b3b195c0, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 0b31abaa4ebb5f84286f6f9a75cebc0b, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 1cd32c7f794b1e14b91557cb60003a12, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: c20ce24cce0c6c14d8f2c25a5bc742bc, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 5e2fcf7bb529e704a97d95fa96ffff97, type: 2}
+      spawnChance: 4
+    - itemSO: {fileID: 11400000, guid: 66273447e93b5f24f89786a5da63fdf6, type: 2}
+      spawnChance: 4
+    - itemSO: {fileID: 11400000, guid: 5c4e1dfd882873645bab6254a08fbf22, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: e322ff081037aa34097bba954588d132, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 79b9910fab94a43459dc430e46510be1, type: 2}
+      spawnChance: 3
+    environmentDensity: 3
+  - itemsSOList:
+    - itemSO: {fileID: 11400000, guid: 86112d011954c9a4196211efedbd52af, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: f25533db47542d84985b8d68f9e7ab8f, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 4f1c3d29e4a63b2429d4d1f8abd58ab2, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: df1cead80de70434a82d81d80fb7180d, type: 2}
+      spawnChance: 2
+    - itemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: c39cf59876801cb40b7543da644b21e0, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: c26fc4943b3ecf64da6974e125ad5eec, type: 2}
+      spawnChance: 3
+    - itemSO: {fileID: 11400000, guid: 04e793b471106834ebbeb6b52e6e3164, type: 2}
+      spawnChance: 3
+    lootPointsCount: 3
+    gridDensityType: 2
+    minItemsCount: 5
+    maxItemsCount: 10
+    environmentItemsSOList:
+    - itemSO: {fileID: 11400000, guid: 8725fdb34eed80445b3ca7d6a56c4dc1, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: b6e9dcba9bbd777458251d5077865121, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 32009fb8c5b26f64aafc49f1c13e0b5f, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: af4593d22e8587c469fc3895b3b195c0, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 0b31abaa4ebb5f84286f6f9a75cebc0b, type: 2}
+      spawnChance: 1
+    - itemSO: {fileID: 11400000, guid: 1cd32c7f794b1e14b91557cb60003a12, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: c20ce24cce0c6c14d8f2c25a5bc742bc, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 5e2fcf7bb529e704a97d95fa96ffff97, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 66273447e93b5f24f89786a5da63fdf6, type: 2}
+      spawnChance: 5
+    - itemSO: {fileID: 11400000, guid: 5c4e1dfd882873645bab6254a08fbf22, type: 2}
+      spawnChance: 4
+    - itemSO: {fileID: 11400000, guid: e322ff081037aa34097bba954588d132, type: 2}
+      spawnChance: 4
+    - itemSO: {fileID: 11400000, guid: 79b9910fab94a43459dc430e46510be1, type: 2}
+      spawnChance: 4
+    environmentDensity: 1

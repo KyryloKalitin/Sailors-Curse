@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
+  m_Name: Food_3
+  m_EditorClassIdentifier: 
+  _description: Fortunately for me, there were leftovers in the storeroom. Besides
+    the canned meat, there's a small quantity of relatively fresh fruits. I can feast,
+    what else is left for me?
+  inventoryItemsSOList:
+  - inventoryItemSO: {fileID: 11400000, guid: f25533db47542d84985b8d68f9e7ab8f, type: 2}
+    amount: 4
+  - inventoryItemSO: {fileID: 11400000, guid: 5d3c9f142ec0af84ba7be68c8b12d692, type: 2}
+    amount: 2
+  - inventoryItemSO: {fileID: 11400000, guid: a435528cb0578324ebbb82dc51ee819a, type: 2}
+    amount: 2

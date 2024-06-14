@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9416e1d997e5d4cb95c5d3dc360686, type: 3}
+  m_Name: Fish
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2211962683547253307, guid: 91ed69327b33f164a94c66011debeb59, type: 3}
+  sprite: {fileID: 21300000, guid: 8326cc96792f616418b6ecc91baeb16b, type: 3}
+  itemName: Fish
+  inventorySpace: 1
+  statsList:
+  - statsType: 0
+    statAmount: 1

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
+  m_Name: Flashlight_Alternative
+  m_EditorClassIdentifier: 
+  _description: At night, I didn't notice the rocks and severely damaged the ship.
+    Perhaps if I had a flashlight, this wouldn't have happened.
+  statsChanged:
+  - statsType: 2
+    statAmount: -5
+  rareInventoryItemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0,
+    type: 2}

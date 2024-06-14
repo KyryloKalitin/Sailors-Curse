@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
+  m_Name: Materials_2
+  m_EditorClassIdentifier: 
+  _description: Wandering around the ship, I was surprised by the total number of
+    beds in the cabins. Since there's no one else to sleep on them, I'll dismantle
+    them for materials, just in case the ship gets damaged. That sort of thing happens,
+    right...?
+  inventoryItemsSOList:
+  - inventoryItemSO: {fileID: 11400000, guid: c26fc4943b3ecf64da6974e125ad5eec, type: 2}
+    amount: 2
+  - inventoryItemSO: {fileID: 11400000, guid: 70609473f4a716748b5dac1e06f0b79c, type: 2}
+    amount: 4

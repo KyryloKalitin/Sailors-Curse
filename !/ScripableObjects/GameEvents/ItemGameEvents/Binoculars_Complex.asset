@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803f04f877187ad46b8ee36b454f3f3a, type: 3}
+  m_Name: Binoculars_Complex
+  m_EditorClassIdentifier: 
+  _description: As I sailed past suspicious debris, I peered into the seabed with
+    binoculars and noticed floating barrels marked as hazardous. I felt like a racer
+    dodging obstacles, as none of them hit my ship. Although I'm not sure if they
+    posed any real danger.
+  statsChanged: []
+  rareInventoryItemSO: {fileID: 11400000, guid: 71acf6d394077a742aa60e3878971814,
+    type: 2}
+  alternativeItemGameEventSO: {fileID: 11400000, guid: d3423d7cab1f29b4cb0828030265c383,
+    type: 2}

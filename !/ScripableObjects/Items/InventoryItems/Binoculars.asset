@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d67ec10e31aca754cada4db9e67ec942, type: 3}
+  m_Name: Binoculars
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2211962683547253307, guid: c1b1642da5af23d4f86bcf7babbf8c1e, type: 3}
+  sprite: {fileID: 21300000, guid: 5380357ba4fb91a42a4299018db09339, type: 3}
+  itemName: Binoculars
+  inventorySpace: 1

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
+  m_Name: Water_1
+  m_EditorClassIdentifier: 
+  _description: I scoured every corner of the ship in hopes of finding even a drop
+    of fresh water, but to no avail. My last hope is the fire suppression reservoirs.
+    I hope this is drinkable...
+  inventoryItemsSOList:
+  - inventoryItemSO: {fileID: 11400000, guid: 4f1c3d29e4a63b2429d4d1f8abd58ab2, type: 2}
+    amount: 4

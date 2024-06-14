@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
+  m_Name: Binoculars_Alternative
+  m_EditorClassIdentifier: 
+  _description: My daytime nap was interrupted by an unexpected explosion that rocked
+    my ship. Risking it, I went out onto the deck and noticed barrels in the water
+    marked as explosive, probably from a submerged factory or something similar.
+    I was lucky that most of the contents inside had spoiled; otherwise, the ship
+    would have been blown to pieces. However, I still didn't escape unscathed. I
+    need to find a way to explore the depths of the water to avoid such surprises.
+  statsChanged:
+  - statsType: 2
+    statAmount: -5
+  rareInventoryItemSO: {fileID: 11400000, guid: 71acf6d394077a742aa60e3878971814,
+    type: 2}

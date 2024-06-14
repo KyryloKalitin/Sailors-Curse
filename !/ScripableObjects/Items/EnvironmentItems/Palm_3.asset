@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1f5c9394127ad4db92b9ff0291c701, type: 3}
+  m_Name: Palm_3
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5383181523876603143, guid: a7ecaa103bbcc3f46adfa9ffc213e0f5, type: 3}
+  size: 1

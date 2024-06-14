@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
+  m_Name: Radio_Alternative
+  m_EditorClassIdentifier: 
+  _description: My ship arrived at an absolutely dreadful place, surrounded by wreckage,
+    with polluted water. Underwater lay a destroyed nuclear station, emitting tons
+    of radiation. I immediately reinforced the walls with planks while my ship distanced
+    itself from the area as far as possible. I don't think I'll die, but I feel terrible;
+    I'll try to recover with food and water. It's a pity there wasn't anything to
+    warn me about this.
+  statsChanged:
+  - statsType: 0
+    statAmount: -4
+  - statsType: 1
+    statAmount: -4
+  - statsType: 2
+    statAmount: -3
+  rareInventoryItemSO: {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2,
+    type: 2}
