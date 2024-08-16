@@ -10,21 +10,21 @@ public class EnemyAttackZoneTriggerHandler : MonoBehaviour
     {
         if(other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            OnPlayerEnter?.Invoke(playerController.GetPlayerStatsService());
+            OnPlayerEnter?.Invoke(playerController.PlayerStatsService);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            OnPlayerExit?.Invoke(playerController.GetPlayerStatsService());
+            OnPlayerExit?.Invoke(playerController.PlayerStatsService);
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            OnPlayerEnter?.Invoke(playerController.GetPlayerStatsService());
+            OnPlayerEnter?.Invoke(playerController.PlayerStatsService);
         }
     }
 }

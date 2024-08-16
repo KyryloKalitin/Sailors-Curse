@@ -6,42 +6,56 @@ using Zenject;
 [SelectionBase]
 public abstract class PlayerController : MonoBehaviour
 {
-    public event Action<PlayerState> OnChangedPlayerState;
+    public event Action<CompositePlayerState> OnChangedPlayerState;
 
-    [Header("Player components")]
+    [Header("Basic player components")]
 
     [SerializeField] protected FPSCameraController _cameraController;
 
-    [Header("Physical parameters")]
+    [Header("Basic physical parameters")]
 
     [SerializeField] protected float _movementSpeed;
     [SerializeField] protected float _maxHorizontalSpeed;
 
-    private float _yRotation = 0f;
+    protected float _yRotation = 0f;
 
     protected Rigidbody _rigidbody;
     protected InputService _inputService;
 
-    protected abstract PlayerState _currentPlayerState { get; }
-    protected PlayerState _lastPlayerState = PlayerState.None;
+    //protected PlayerStates _playerStates = new()
+    //{
+    //    _currentMainPlayerState = PlayerState.None,
+    //    _currentSecondaryPlayerState = PlayerState.None,
+    //    _lastMainPlayerState = PlayerState.None,
+    //    _lastSecondaryPlayerState = PlayerState.None
+    //};
+
+    protected CompositePlayerState _playerState = new()
+    {
+        _currentMainPlayerState = PlayerState.None,
+        _currentSecondaryPlayerState = PlayerState.None,
+        _lastMainPlayerState = PlayerState.None,
+        _lastSecondaryPlayerState = PlayerState.None
+    };
+    protected abstract void UpdatePlayerState();
 
     protected SelectableItem _selectedItem = null;
     protected SelectableItem _lastSelectedItem = null;
+
+    #region Lifecycle methods
 
     [Inject]
     public void Construct(InputService inputService)
     {
         _inputService = inputService;
     }
-
-    #region Lifecycle methods
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-        UpdatePlayerState();
+        ApplyPlayerStateIfChanged();
         Rotate();
     }
     protected virtual void FixedUpdate()
@@ -50,12 +64,20 @@ public abstract class PlayerController : MonoBehaviour
     }
     #endregion Lifecycle methods
 
-    protected void UpdatePlayerState()
+    protected void ApplyPlayerStateIfChanged()
     {
-        if ((_currentPlayerState != _lastPlayerState) || _lastPlayerState == PlayerState.None)
+        UpdatePlayerState();
+
+        if (_playerState._currentMainPlayerState != _playerState._lastMainPlayerState ||
+           _playerState._currentSecondaryPlayerState != _playerState._lastSecondaryPlayerState ||
+           _playerState._lastMainPlayerState == PlayerState.None || _playerState._lastSecondaryPlayerState == PlayerState.None)
         {
-            _lastPlayerState = _currentPlayerState;
-            OnChangedPlayerState?.Invoke(_currentPlayerState);
+            _playerState._lastMainPlayerState = _playerState._currentMainPlayerState;
+
+            _playerState._lastSecondaryPlayerState = _playerState._currentSecondaryPlayerState;
+
+            Debug.Log(_playerState._currentMainPlayerState + " " + _playerState._currentSecondaryPlayerState);
+            OnChangedPlayerState?.Invoke(_playerState);
         }
     }
 

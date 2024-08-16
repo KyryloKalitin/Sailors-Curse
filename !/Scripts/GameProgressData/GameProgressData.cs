@@ -112,6 +112,5 @@ public struct GameProgressData
 
             return allEventsList;
         }
-
     }
 }

@@ -3,19 +3,18 @@ using UnityEngine.InputSystem;
 
 public class ShipPlayerController : PlayerController
 {
-    protected override PlayerState _currentPlayerState
+    protected override void UpdatePlayerState()
     {
-        get
+        if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
         {
-            if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
-            {
-                return PlayerState.Walk;
-            }
-            else
-            {
-                return PlayerState.Idle;
-            }
+            _playerState._currentMainPlayerState = PlayerState.Walk;
         }
+        else
+        {
+            _playerState._currentMainPlayerState = PlayerState.Idle;
+        }
+
+        _playerState._currentSecondaryPlayerState = PlayerState.FreeHands;
     }
 
     private void Start()

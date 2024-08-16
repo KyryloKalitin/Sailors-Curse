@@ -4,22 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class IslandPlayerController : PlayerController
-{
-    [Header("Player components")]
-
+public partial class IslandPlayerController : PlayerController
+{   
     [SerializeField] private GroundCheckService _groundCheckService;
-    [SerializeField] private PlayerAttackZoneTriggerHandler _attackZone;
+    [SerializeField] public PlayerAttackZoneTriggerHandler AttackZone { get; private set; }
 
     [SerializeField] private HoldPoints _holdPoints;
-
-    [Header("Physical parameters")]
 
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _fallingAcceleration;
 
-    private PlayerInventoryService _playerInventoryService;
-    private PlayerStatsService _playerStatsService;
+    public PlayerInventoryService PlayerInventoryService { get; private set; }
+    public PlayerStatsService PlayerStatsService { get; private set; }
+
     private IslandGameManager _islandGameManager;
 
     private bool _isJumping;
@@ -38,73 +35,51 @@ public class IslandPlayerController : PlayerController
         }
     }
 
-    protected override PlayerState _currentPlayerState
-    {
-        get
+    protected override void UpdatePlayerState()
+    {  
+        if (_isJumping)
         {
-            if (_playerInventoryService.GetHandheldItem() != null)
+            _playerState._currentMainPlayerState = PlayerState.Jump;
+        }
+        else if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
+        {
+            _playerState._currentMainPlayerState = PlayerState.Walk;
+        }
+        else
+        {
+            _playerState._currentMainPlayerState = PlayerState.Idle;
+        }
+
+        if (PlayerInventoryService.GetHandheldItem() != null)
+        {
+            _playerState._currentSecondaryPlayerState = PlayerState.HasItem;
+        }
+        else if (PlayerInventoryService.GetWeapon() != null)
+        {
+            if (PlayerInventoryService.GetWeapon().IsAttacking)
             {
-                if (_isJumping)
-                {
-                    return PlayerState.HandheldJump;
-                }
-
-                if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
-                {
-                    return PlayerState.HandheldWalk;
-                }
-                else
-                {
-                    return PlayerState.HandheldIdle;
-                }
-            }
-
-            if (_playerInventoryService.GetWeapon() != null)
-            {
-                if (_playerInventoryService.GetWeapon().IsAttacking)
-                {
-                    return PlayerState.Attack;
-                }
-
-                if (_isJumping)
-                {
-                    return PlayerState.WeaponJump;
-                }
-
-                if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
-                {
-                    return PlayerState.WeaponWalk;
-                }
-                else
-                {
-                    return PlayerState.WeaponIdle;
-                }
-            }
-
-            if (_isJumping)
-            {
-                return PlayerState.Jump;
-            }
-
-            if (_inputService.GetMovementNormalizedVector() != Vector2.zero)
-            {
-                return PlayerState.Walk;
+                _playerState._currentSecondaryPlayerState = PlayerState.Attack;
             }
             else
             {
-                return PlayerState.Idle;
+                _playerState._currentSecondaryPlayerState = PlayerState.HasWeapon;
             }
         }
+        else
+        {
+            _playerState._currentSecondaryPlayerState = PlayerState.FreeHands;
+        }
     }
+
 
     [Inject]
     public void Construct(PlayerInventoryService playerInventoryService, PlayerStatsService playerStatsService, IslandGameManager islandGameManager)
     {
-        _playerStatsService = playerStatsService;
-        _playerInventoryService = playerInventoryService;
+        PlayerStatsService = playerStatsService;
+        PlayerInventoryService = playerInventoryService;
         _islandGameManager = islandGameManager;
 
-        _playerInventoryService.SetHoldPoints(_holdPoints);
+        PlayerInventoryService.SetHoldPoints(_holdPoints);
     }
 
     #region Lifecycle methods
@@ -129,21 +104,6 @@ public class IslandPlayerController : PlayerController
     }
     #endregion Lifecycle methods
 
-    #region Getters
-    public PlayerInventoryService GetPlayerInventoryService()
-    {
-        return _playerInventoryService;
-    }
-    public PlayerAttackZoneTriggerHandler GetAttackZone()
-    {
-        return _attackZone;
-    }
-    public PlayerStatsService GetPlayerStatsService()
-    {
-        return _playerStatsService;
-    }
-    #endregion
-
     #region Event handlers
     protected void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -153,7 +113,7 @@ public class IslandPlayerController : PlayerController
             {
                 TakeableItem selectedItem = _selectedItem as TakeableItem;
 
-                selectedItem.Interact(_playerInventoryService);
+                selectedItem.Interact(PlayerInventoryService);
             }
 
             if(_selectedItem is UntakeableItem)
@@ -167,9 +127,9 @@ public class IslandPlayerController : PlayerController
 
     protected void _cameraController_OnSelectedItem(SelectableItem item)
     {
-        if (_playerInventoryService.IsSelectionEnabled())
+        if (PlayerInventoryService.IsSelectionEnabled())
         {
-            if (item == _playerInventoryService.GetWeapon() && item != null)
+            if (item == PlayerInventoryService.GetWeapon() && item != null)
                 return;
 
             _lastSelectedItem = _selectedItem;
@@ -211,8 +171,8 @@ public class IslandPlayerController : PlayerController
     }
     private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (_playerInventoryService.CanWeaponAttack())
-            _playerInventoryService.GetWeapon().Attack();
+        if (PlayerInventoryService.CanWeaponAttack())
+            PlayerInventoryService.GetWeapon().Attack();
     }
     private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -225,7 +185,7 @@ public class IslandPlayerController : PlayerController
     {
         _isJumping = true;
 
-        _rigidbody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+        _rigidbody.AddForce(transform.up * _jumpForce + transform.forward * _jumpForce, ForceMode.Impulse);
 
         // Wait for the player to jump
         yield return new WaitUntil(() => !_isGrounded);

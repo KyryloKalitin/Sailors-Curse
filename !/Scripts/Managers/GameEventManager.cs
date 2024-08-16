@@ -27,9 +27,10 @@ public class GameEventManager
 
     private void Initialize()
     {
-        GameProgressData gameProgressData = GameProgressDataIO.LoadData();
+        GameProgressData gameProgressData = GameProgressDataIO.LoadData();        
 
         _lastGameEventsList = gameProgressData.lastGameEvents.GetGameEventsList();
+
         _playerStatsService = new(gameProgressData.playerStatsData);
         _daysAmount = gameProgressData.daysAmount;
 

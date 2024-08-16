@@ -5,15 +5,11 @@
         Idle,
         Walk,
         Jump,
-
-        WeaponIdle,
-        WeaponWalk,
-        WeaponJump,
         Attack,
 
-        HandheldIdle,
-        HandheldWalk,
-        HandheldJump
+        FreeHands,
+        HasWeapon,
+        HasItem
     }
 
 

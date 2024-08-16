@@ -22,7 +22,7 @@ public class MeleeWeapon : Weapon
 
         if (other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            _attackZone = playerController.GetAttackZone();
+            _attackZone = playerController.AttackZone;
             _attackZone.gameObject.SetActive(true);
             _attackZone.OnDamageableDetected += _attackZone_OnDamageableDetected;
         }

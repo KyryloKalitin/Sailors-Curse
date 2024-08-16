@@ -132,7 +132,7 @@ public class IslandGameManager : MonoBehaviour
 
         for (int i = 1; i <= _gameTime; i++)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
             yield return new WaitForSeconds(1f);
         }
 

@@ -29,7 +29,7 @@ public class ShipZoneTriggerHandler : MonoBehaviour
         {
             _isPlayerStaying = true;
 
-            playerController.GetPlayerInventoryService().UnboxAll(_shipInventoryService);
+            playerController.PlayerInventoryService.UnboxAll(_shipInventoryService);
             return;
         }
 

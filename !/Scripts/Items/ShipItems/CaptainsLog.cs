@@ -11,7 +11,6 @@ public class CaptainsLog : UntakeableItem
 
     private void Start()
     {
-
         _button.onClick.AddListener(Hide);
 
         Hide();

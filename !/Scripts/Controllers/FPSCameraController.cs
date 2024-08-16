@@ -10,6 +10,7 @@ public class FPSCameraController : MonoBehaviour
     private float _xRotation;
 
     private LayerMask _playerLayer;
+    private const string _PLAYER_LAYER_NAME = "Player";
 
     private InputService _inputService;
 
@@ -21,7 +22,7 @@ public class FPSCameraController : MonoBehaviour
 
     private void Awake()
     {
-        _playerLayer = LayerMask.NameToLayer("Player");
+        _playerLayer = LayerMask.NameToLayer(_PLAYER_LAYER_NAME);
     }
 
     private void LateUpdate()
