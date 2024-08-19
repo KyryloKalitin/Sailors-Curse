@@ -22,6 +22,14 @@ public abstract class PlayerController : MonoBehaviour
     protected Rigidbody _rigidbody;
     protected InputService _inputService;
 
+    //protected PlayerStates _playerStates = new()
+    //{
+    //    _currentMainPlayerState = PlayerState.None,
+    //    _currentSecondaryPlayerState = PlayerState.None,
+    //    _lastMainPlayerState = PlayerState.None,
+    //    _lastSecondaryPlayerState = PlayerState.None
+    //};
+
     protected CompositePlayerState _playerState = new()
     {
         _currentMainPlayerState = PlayerState.None,
