@@ -22,14 +22,6 @@ public abstract class PlayerController : MonoBehaviour
     protected Rigidbody _rigidbody;
     protected InputService _inputService;
 
-    //protected PlayerStates _playerStates = new()
-    //{
-    //    _currentMainPlayerState = PlayerState.None,
-    //    _currentSecondaryPlayerState = PlayerState.None,
-    //    _lastMainPlayerState = PlayerState.None,
-    //    _lastSecondaryPlayerState = PlayerState.None
-    //};
-
     protected CompositePlayerState _playerState = new()
     {
         _currentMainPlayerState = PlayerState.None,
@@ -55,6 +47,7 @@ public abstract class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        UpdatePlayerState();
         ApplyPlayerStateIfChanged();
         Rotate();
     }
@@ -66,15 +59,22 @@ public abstract class PlayerController : MonoBehaviour
 
     protected void ApplyPlayerStateIfChanged()
     {
-        UpdatePlayerState();
+        bool isStateChanged = _playerState._currentMainPlayerState != _playerState._lastMainPlayerState ||
+                                _playerState._currentSecondaryPlayerState != _playerState._lastSecondaryPlayerState ||
+                                (_playerState._lastMainPlayerState == PlayerState.None &&
+                                _playerState._lastSecondaryPlayerState == PlayerState.None);
 
-        if (_playerState._currentMainPlayerState != _playerState._lastMainPlayerState ||
-           _playerState._currentSecondaryPlayerState != _playerState._lastSecondaryPlayerState ||
-           _playerState._lastMainPlayerState == PlayerState.None || _playerState._lastSecondaryPlayerState == PlayerState.None)
+        if (isStateChanged)
         {
-            _playerState._lastMainPlayerState = _playerState._currentMainPlayerState;
+            bool isTryingInterruptAttack = _playerState._currentSecondaryPlayerState == PlayerState.Attack && 
+                                                        _playerState._lastSecondaryPlayerState == PlayerState.Attack;
 
-            _playerState._lastSecondaryPlayerState = _playerState._currentSecondaryPlayerState;
+            if (isTryingInterruptAttack)
+                _playerState._currentSecondaryPlayerState = PlayerState.None;
+            else
+                _playerState._lastSecondaryPlayerState = _playerState._currentSecondaryPlayerState;
+
+            _playerState._lastMainPlayerState = _playerState._currentMainPlayerState;
 
             Debug.Log(_playerState._currentMainPlayerState + " " + _playerState._currentSecondaryPlayerState);
             OnChangedPlayerState?.Invoke(_playerState);

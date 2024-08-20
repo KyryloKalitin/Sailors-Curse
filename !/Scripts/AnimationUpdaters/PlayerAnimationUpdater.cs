@@ -37,7 +37,10 @@ public class PlayerAnimationUpdater : MonoBehaviour
 
     private void _playerController_OnChangedPlayerState(CompositePlayerState state)
     {
-        _animator.SetTrigger(_statesList[state._currentMainPlayerState]);
-        _animator.SetTrigger(_statesList[state._currentSecondaryPlayerState]);
+        if(state._currentMainPlayerState != PlayerState.None)        
+            _animator.SetTrigger(_statesList[state._currentMainPlayerState]);
+        
+        if(state._currentSecondaryPlayerState != PlayerState.None)
+            _animator.SetTrigger(_statesList[state._currentSecondaryPlayerState]);
     }
 }
