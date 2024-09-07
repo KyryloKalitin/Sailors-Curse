@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item Game Event")]
+[CreateAssetMenu(menuName = "GameEvent/ItemGameEvent")]
 public class ItemGameEventSO : StatGameEventSO
 {
     public RareInventoryItemSO rareInventoryItemSO;
+
+
 }
 
 

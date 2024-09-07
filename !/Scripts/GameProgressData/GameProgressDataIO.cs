@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -29,7 +30,9 @@ public static class GameProgressDataIO
         }
         else
         {
-            gameProgressData = GameProgressData.CreateDefault();
+            gameProgressData = new( new ShipInventoryData   (new ShipInventoryService()),
+                                    new PlayerStatsData     (new PlayerStatsService()),
+                                    new LastGameEvents      (new List<GameEventSO>()), 0);
 
             SaveData(gameProgressData);
         }

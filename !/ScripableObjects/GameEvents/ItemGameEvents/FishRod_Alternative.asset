@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: FishRod_Alternative
   m_EditorClassIdentifier: 
-  _description: During the storm, a pack of resources fell overboard. It's very sad.
+  description: During the storm, a pack of resources fell overboard. It's very sad.
     If I had a fishing rod, I could try to retrieve them.
   statsChanged:
   - statsType: 0

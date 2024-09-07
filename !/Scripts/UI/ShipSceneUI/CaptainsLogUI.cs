@@ -26,7 +26,7 @@ public class CaptainsLogUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var gameEvent in _gameEventManager.GetEventsList())
+        foreach (var gameEvent in _gameEventManager.LastGameEventsList)
         {
             Transform eventVisual = Instantiate(_cellTemplate, _cellContainer);
             eventVisual.gameObject.SetActive(true);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_2
   m_EditorClassIdentifier: 
-  _description: Wandering around the ship, I was surprised by the total number of
+  description: Wandering around the ship, I was surprised by the total number of
     beds in the cabins. Since there's no one else to sleep on them, I'll dismantle
     them for materials, just in case the ship gets damaged. That sort of thing happens,
     right...?

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: Binoculars
   m_EditorClassIdentifier: 
-  _description: Even though there was no land left to peek at through the binoculars,
+  description: Even though there was no land left to peek at through the binoculars,
     I found another use for them. Using the lens, I managed to boil some of the industrial
     water, which was previously unsuitable for drinking.
   statsChanged:

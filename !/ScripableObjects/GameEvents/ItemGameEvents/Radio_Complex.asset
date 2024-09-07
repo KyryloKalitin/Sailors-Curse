@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803f04f877187ad46b8ee36b454f3f3a, type: 3}
   m_Name: Radio_Complex
   m_EditorClassIdentifier: 
-  _description: During the night, I was awakened by a signal from the radio. It conveyed
+  description: During the night, I was awakened by a signal from the radio. It conveyed
     coordinates of a nuclear station where an accident occurred. I believe the signal
     was sent automatically, without human assistance, and the station has long been
     underwater. I won't take the risk and will sail around that area.

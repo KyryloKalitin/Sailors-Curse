@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: Binoculars_Alternative
   m_EditorClassIdentifier: 
-  _description: My daytime nap was interrupted by an unexpected explosion that rocked
+  description: My daytime nap was interrupted by an unexpected explosion that rocked
     my ship. Risking it, I went out onto the deck and noticed barrels in the water
     marked as explosive, probably from a submerged factory or something similar.
     I was lucky that most of the contents inside had spoiled; otherwise, the ship

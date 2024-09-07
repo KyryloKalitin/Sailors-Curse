@@ -7,26 +7,26 @@ public class ShipInventoryService
     public event Action OnStatOver;
     public event Action OnStatChanged;
 
-    public int AmountWater
+    public int WaterAmount
     {
         get => _statsList[StatsType.Water].currentStatAmount;
 
-        private set => _statsList[StatsType.Water].currentStatAmount += value;    
+        private set => _statsList[StatsType.Water].currentStatAmount = value;    
     }
-    public int AmountFood
+    public int FoodAmount
     {
         get => _statsList[StatsType.Food].currentStatAmount;
 
-        private set => _statsList[StatsType.Food].currentStatAmount += value;    
+        private set => _statsList[StatsType.Food].currentStatAmount = value;    
     }
-    public int AmountMaterials
+    public int MaterialsAmount
     {
         get => _statsList[StatsType.Material].currentStatAmount;
 
-        private set => _statsList[StatsType.Material].currentStatAmount += value;
+        private set => _statsList[StatsType.Material].currentStatAmount = value;
     }
 
-    public ShipInventoryLevelSO CurrentShipInventoryLevelSO { get; private set; }
+    public ShipInventoryLevelSO CurrentShipInventoryLevelSO { get; set; }
     public List<RareInventoryItemSO> RareItemsList { get; private set; }
     public Weapon Weapon { get; set; }
 
@@ -40,9 +40,9 @@ public class ShipInventoryService
 
         List<StatsType_Saturation> summaryStatsList = new()
         {
-            { new StatsType_Saturation() { statsType = StatsType.Food,      statAmount = firstShipInventoryService.AmountFood + secondShipInventoryService.AmountFood } },
-            { new StatsType_Saturation() { statsType = StatsType.Water,     statAmount = firstShipInventoryService.AmountWater + secondShipInventoryService.AmountWater } },
-            { new StatsType_Saturation() { statsType = StatsType.Material,  statAmount = firstShipInventoryService.AmountMaterials + secondShipInventoryService.AmountMaterials } }
+            { new StatsType_Saturation() { statsType = StatsType.Food,      statAmount = firstShipInventoryService.FoodAmount + secondShipInventoryService.FoodAmount } },
+            { new StatsType_Saturation() { statsType = StatsType.Water,     statAmount = firstShipInventoryService.WaterAmount + secondShipInventoryService.WaterAmount } },
+            { new StatsType_Saturation() { statsType = StatsType.Material,  statAmount = firstShipInventoryService.MaterialsAmount + secondShipInventoryService.MaterialsAmount } }
         };
 
         result.UpdateStats(summaryStatsList);
@@ -88,29 +88,15 @@ public class ShipInventoryService
         };
 
         RareItemsList = new List<RareInventoryItemSO>();
-
-        Weapon = null;
     }
 
-    public ShipInventoryService(ShipInventoryLevelSO shipInventoryLevelSO) : this()
-    {
-        CurrentShipInventoryLevelSO = shipInventoryLevelSO;
-
-        _statsList = new Dictionary<StatsType, StatValues>
-        {
-            { StatsType.Food,       new StatValues() { maxStatAmount = CurrentShipInventoryLevelSO.foodMaxAmount    } },
-            { StatsType.Water,      new StatValues() { maxStatAmount = CurrentShipInventoryLevelSO.waterMaxAmount   } },
-            { StatsType.Material,   new StatValues() { maxStatAmount = CurrentShipInventoryLevelSO.materialMaxAmount} }
-        };
-    }
-
-    public ShipInventoryService(GameProgressData.ShipInventoryData data) : this()
+    public ShipInventoryService(ShipInventoryData data) : this()
     {
         CurrentShipInventoryLevelSO = data.shipInventoryLevel;
 
-        AmountFood = data.foodAmount;
-        AmountWater = data.waterAmount;
-        AmountMaterials = data.materialAmount;
+        FoodAmount = data.foodAmount;
+        WaterAmount = data.waterAmount;
+        MaterialsAmount = data.materialAmount;
 
         RareItemsList = data.rareItemsList;
 
@@ -155,7 +141,7 @@ public class ShipInventoryService
     {
         Debug.Log("RareItemsList.Count(GetStats): " + RareItemsList.Count);
 
-        Debug.Log("Inventory condition: " + "AmountFood: " + AmountFood + " " + "AmountWater" + AmountWater + " " + "AmountMaterials" + AmountMaterials);
+        Debug.Log("Inventory condition: " + "AmountFood: " + FoodAmount + " " + "AmountWater" + WaterAmount + " " + "AmountMaterials" + MaterialsAmount);
     }
 
     private class StatValues

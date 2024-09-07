@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Water_2
   m_EditorClassIdentifier: 
-  _description: Did I find mountains of fresh drinking water in the storeroom? Far
+  description: Did I find mountains of fresh drinking water in the storeroom? Far
     from it. All I have to make do with is a couple of bottles found in the cabins
     and on the lifeboats.
   inventoryItemsSOList:

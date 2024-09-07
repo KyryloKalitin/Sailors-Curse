@@ -25,8 +25,8 @@ public class StatInfoUI : MonoBehaviour
 
     private void _shipInventoryService_OnStatChanged()
     {
-        _foodText.text = _shipInventoryService.AmountFood.ToString();
-        _waterText.text = _shipInventoryService.AmountWater.ToString();
-        _materialsText.text = _shipInventoryService.AmountMaterials.ToString();
+        _foodText.text = _shipInventoryService.FoodAmount.ToString();
+        _waterText.text = _shipInventoryService.WaterAmount.ToString();
+        _materialsText.text = _shipInventoryService.MaterialsAmount.ToString();
     }
 }

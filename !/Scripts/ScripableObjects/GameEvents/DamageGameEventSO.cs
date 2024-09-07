@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Damage Game Event")]
+[CreateAssetMenu(menuName = "GameEvent/DamageGameEvent")]
 public class DamageGameEventSO : StatGameEventSO
 {
     public DamageType damageType;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_3
   m_EditorClassIdentifier: 
-  _description: Are ship repair yards called the same as those for cars? However,
+  description: Are ship repair yards called the same as those for cars? However,
     it doesn't matter. If they existed before, they probably don't exist now. Fortunately,
     there are plenty of high-quality planks in the warehouse, so I can repair the
     ship myself.

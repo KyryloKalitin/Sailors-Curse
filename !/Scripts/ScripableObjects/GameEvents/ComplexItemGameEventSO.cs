@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Complex Item Game Event")]
+[CreateAssetMenu(menuName = "GameEvent/ComplexItemGameEvent")]
 public class ComplexItemGameEventSO : ItemGameEventSO
 {
     public ItemGameEventSO alternativeItemGameEventSO;

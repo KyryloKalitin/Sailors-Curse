@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
-  _description: Under the captain's mattress, I found a flashlight. Honestly, I don't
+  description: Under the captain's mattress, I found a flashlight. Honestly, I don't
     know why he needed it; maybe he was afraid to walk to the bathroom at night?
     Oh well, it doesn't matter, I'll definitely put it to good use.
   inventoryItemsSOList:

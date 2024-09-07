@@ -23,9 +23,9 @@ public class LocationInstaller_IslandScene : MonoInstaller
         IslandPlayerController playerController = Container
             .InstantiatePrefabForComponent<IslandPlayerController>(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity, null);
 
-        if (gameProgressData.shipInventoryData.weaponSO != null)
+        if (gameProgressData.ShipInventoryData.weaponSO != null)
         { 
-            Weapon weapon = Instantiate(gameProgressData.shipInventoryData.weaponSO.prefab.gameObject).GetComponent<Weapon>();
+            Weapon weapon = Instantiate(gameProgressData.ShipInventoryData.weaponSO.prefab.gameObject).GetComponent<Weapon>();
             playerController.PlayerInventoryService.SetWeapon(weapon);        
         }    
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: Radio_Alternative
   m_EditorClassIdentifier: 
-  _description: My ship arrived at an absolutely dreadful place, surrounded by wreckage,
+  description: My ship arrived at an absolutely dreadful place, surrounded by wreckage,
     with polluted water. Underwater lay a destroyed nuclear station, emitting tons
     of radiation. I immediately reinforced the walls with planks while my ship distanced
     itself from the area as far as possible. I don't think I'll die, but I feel terrible;

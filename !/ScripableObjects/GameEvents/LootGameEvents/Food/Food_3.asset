@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Food_3
   m_EditorClassIdentifier: 
-  _description: Fortunately for me, there were leftovers in the storeroom. Besides
+  description: Fortunately for me, there were leftovers in the storeroom. Besides
     the canned meat, there's a small quantity of relatively fresh fruits. I can feast,
     what else is left for me?
   inventoryItemsSOList:

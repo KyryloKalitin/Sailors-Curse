@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: Flashlight_Alternative
   m_EditorClassIdentifier: 
-  _description: At night, I didn't notice the rocks and severely damaged the ship.
+  description: At night, I didn't notice the rocks and severely damaged the ship.
     Perhaps if I had a flashlight, this wouldn't have happened.
   statsChanged:
   - statsType: 2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: AngryBirds
   m_EditorClassIdentifier: 
-  _description: Seeing a huge flock of birds in the sky, I realized that it wouldn't
+  description: Seeing a huge flock of birds in the sky, I realized that it wouldn't
     end well. They were probably in the sky since that fateful day, and my ship was
     the first land they encountered on their way. Raiding the ship, they shredded
     the sails, tore the ropes. If they had gotten inside, I wouldn't have survived.

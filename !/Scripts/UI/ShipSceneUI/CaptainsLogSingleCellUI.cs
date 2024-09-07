@@ -12,7 +12,7 @@ public class CaptainsLogSingleCellUI : MonoBehaviour
 
     public void SetEventSO(GameEventSO gameEventSO)
     {
-        _eventDescription.text = gameEventSO._description;
+        _eventDescription.text = gameEventSO.description;
 
         foreach (Transform child in _itemContainer)
         {

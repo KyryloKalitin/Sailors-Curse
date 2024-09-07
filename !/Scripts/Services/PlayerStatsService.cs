@@ -15,7 +15,7 @@ public class PlayerStatsService : IDamageable
 
         TypedHitsList = new List<TypedHit>();
     }
-    public PlayerStatsService(GameProgressData.PlayerStatsData data)
+    public PlayerStatsService(PlayerStatsData data)
     {
         HP = data.HP;
         TypedHitsList = data.typedHitsList;

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3962398320794667280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.9721523e-31, y: -0.110000014, z: -0.166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58,7 +58,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.06
+  near clip plane: 0.03
   far clip plane: 5000
   field of view: 90
   orthographic: 0
@@ -222,7 +222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5104839708465626678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.11, z: -0.166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 90
     OrthographicSize: 10
-    NearClipPlane: 0.06
+    NearClipPlane: 0.03
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -278,6 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3371575858965982075}
   - component: {fileID: 4167525249505247799}
+  - component: {fileID: 2384885152679794775}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -292,15 +293,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5522957833012401905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.794, z: 0.283}
+  m_LocalRotation: {x: -0, y: 1.0206817e-34, z: -6.617445e-24, w: 1}
+  m_LocalPosition: {x: 0, y: 1.9009999, z: 0.332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8718113554831849924}
   - {fileID: 7530012699045070319}
   m_Father: {fileID: 2150192856295736240}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4167525249505247799
 MonoBehaviour:
@@ -314,6 +315,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796c46f321375ec46b34bab32e223f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2384885152679794775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5522957833012401905}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9f0812929ed8d478574b8844b0a902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headTransform: {fileID: 1299399603981496639}
 --- !u!1 &8993986727141509249
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,8 +360,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3371575858965982075}
   - {fileID: 1042782368495474211}
+  - {fileID: 3371575858965982075}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -414,8 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraController: {fileID: 4167525249505247799}
-  _movementSpeed: 12
-  _maxHorizontalSpeed: 3
+  _movementSpeed: 15
+  _maxHorizontalSpeed: 5
 --- !u!1001 &716648997867745736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -426,7 +440,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2a6f513b405830942975c786459922fe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2a6f513b405830942975c786459922fe,
         type: 3}
@@ -532,6 +546,12 @@ MonoBehaviour:
 --- !u!4 &1042782368495474211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a6f513b405830942975c786459922fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 716648997867745736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1299399603981496639 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7207332283729952521, guid: 2a6f513b405830942975c786459922fe,
     type: 3}
   m_PrefabInstance: {fileID: 716648997867745736}
   m_PrefabAsset: {fileID: 0}

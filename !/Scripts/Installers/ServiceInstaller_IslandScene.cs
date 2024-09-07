@@ -26,7 +26,7 @@ public class ServiceInstaller_IslandScene : MonoInstaller
     {
         GameProgressData gameProgressData = GameProgressDataIO.LoadData();        
 
-        ShipInventoryService shipInventoryService = new(gameProgressData.shipInventoryData.shipInventoryLevel);
+        ShipInventoryService shipInventoryService = new() { CurrentShipInventoryLevelSO = gameProgressData.ShipInventoryData.shipInventoryLevel };
 
         Container.Bind<ShipInventoryService>().FromInstance(shipInventoryService).AsSingle();
     }

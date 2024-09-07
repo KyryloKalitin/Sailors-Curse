@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803f04f877187ad46b8ee36b454f3f3a, type: 3}
   m_Name: Flashlight_Complex
   m_EditorClassIdentifier: 
-  _description: Thanks to the flashlight, I noticed the rocks at night and barely
+  description: Thanks to the flashlight, I noticed the rocks at night and barely
     managed to sail around them.
   statsChanged: []
   rareInventoryItemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0,

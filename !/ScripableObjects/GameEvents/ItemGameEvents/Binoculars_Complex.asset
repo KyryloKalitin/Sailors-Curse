@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803f04f877187ad46b8ee36b454f3f3a, type: 3}
   m_Name: Binoculars_Complex
   m_EditorClassIdentifier: 
-  _description: As I sailed past suspicious debris, I peered into the seabed with
+  description: As I sailed past suspicious debris, I peered into the seabed with
     binoculars and noticed floating barrels marked as hazardous. I felt like a racer
     dodging obstacles, as none of them hit my ship. Although I'm not sure if they
     posed any real danger.

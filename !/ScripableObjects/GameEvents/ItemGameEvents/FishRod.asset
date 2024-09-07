@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: FishRod
   m_EditorClassIdentifier: 
-  _description: Out of boredom, I decided to try fishing. Can't have too much food
+  description: Out of boredom, I decided to try fishing. Can't have too much food
     on hand.
   statsChanged:
   - statsType: 0

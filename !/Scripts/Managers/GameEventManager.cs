@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class GameEventManager 
 {
+    public List<GameEventSO> LastGameEventsList { get; private set; }
+
     private ShipInventoryService _shipInventoryService;
     private PlayerStatsService _playerStatsService;
 
@@ -15,7 +15,6 @@ public class GameEventManager
     private string _EVENT_SET_PATH = "Data/GameEventSet";
     private GameEventSetSO _eventSetSO;
 
-    private List<GameEventSO> _lastGameEventsList;
 
     [Inject]
     public void Construct(ShipInventoryService shipInventoryService)
@@ -29,29 +28,23 @@ public class GameEventManager
     {
         GameProgressData gameProgressData = GameProgressDataIO.LoadData();        
 
-        _lastGameEventsList = gameProgressData.lastGameEvents.GetGameEventsList();
+        LastGameEventsList = gameProgressData.LastGameEvents.GameEventsSOList;
 
-        _playerStatsService = new(gameProgressData.playerStatsData);
-        _daysAmount = gameProgressData.daysAmount;
+        _playerStatsService = new(gameProgressData.PlayerStatsData);
+        _daysAmount = gameProgressData.DaysAmount;
 
-        if (_lastGameEventsList.Count == 0)
+        if (LastGameEventsList.Count == 0)
         {
             _shipInventoryService.OnStatOver += _shipInventoryService_OnStatOver;
             _eventSetSO = Resources.Load<GameEventSetSO>(_EVENT_SET_PATH);
 
             StartGameEvents();
-            _shipInventoryService.GetStats();
 
             _shipInventoryService.UpdateStats(_eventSetSO.defaultStatLossSO.statsChanged);
-            _shipInventoryService.GetStats();
 
-            GameProgressDataIO.SaveData(new GameProgressData(_shipInventoryService, _playerStatsService, 1, _lastGameEventsList));
+            GameProgressDataIO.SaveData(new GameProgressData   (new(_shipInventoryService), new(_playerStatsService), 
+                                                                new(LastGameEventsList), gameProgressData.DaysAmount));
         }
-    }
-
-    public List<GameEventSO> GetEventsList()
-    {
-        return _lastGameEventsList;
     }
 
     private void _shipInventoryService_OnStatOver()
@@ -80,10 +73,10 @@ public class GameEventManager
     {
         StatGameEventSO statGameEventSO = GameRandomizer.GetRandomItem(_eventSetSO.statEvents);
 
-        _lastGameEventsList.Add(statGameEventSO);
+        LastGameEventsList.Add(statGameEventSO);
 
-        StatGameEvent statGameEvent = new(statGameEventSO);
-        statGameEvent.ApplyEventToInventory(_shipInventoryService);
+        var eventHandler = GameEventHandlerFactory.CreateHandler(statGameEventSO);
+        eventHandler.ApplyToInventory(_shipInventoryService);
     }
 
     private void StartDamageGameEvents()
@@ -100,13 +93,16 @@ public class GameEventManager
             totalDamage[hit.damageType] += hit.damage;
         }
 
+        // Searching for the key corresponding to the largest value
         DamageType topDamageType = totalDamage.OrderByDescending(x => x.Value).FirstOrDefault().Key;
 
+        // Searching for an event corresponding to a key
         DamageGameEventSO damageGameEventSO = _eventSetSO.damageGameEvents.FirstOrDefault(eventSO => eventSO.damageType == topDamageType);
-        _lastGameEventsList.Add(damageGameEventSO);
 
-        DamageGameEvent damageGameEvent = new(damageGameEventSO);
-        damageGameEvent.ApplyEventToInventory(_shipInventoryService);
+        LastGameEventsList.Add(damageGameEventSO);
+
+        var eventHandler = GameEventHandlerFactory.CreateHandler(damageGameEventSO);
+        eventHandler.ApplyToInventory(_shipInventoryService);
     }
 
     private void StartStartingGameEvents()
@@ -127,10 +123,10 @@ public class GameEventManager
 
         foreach (var gameEvent in startingEvents)
         {
-            _lastGameEventsList.Add(gameEvent);
+            LastGameEventsList.Add(gameEvent);
 
-            LootGameEvent lootGameEvent = new(gameEvent);
-            lootGameEvent.ApplyEventToInventory(_shipInventoryService);
+            var eventHandler = GameEventHandlerFactory.CreateHandler(gameEvent);
+            eventHandler.ApplyToInventory(_shipInventoryService);
         }
     }
 
@@ -138,20 +134,17 @@ public class GameEventManager
     {
         ItemGameEventSO itemGameEventSO = GameRandomizer.GetRandomItem(_eventSetSO.itemEvents);
 
-        ItemGameEvent itemGameEvent = new(itemGameEventSO);
+        IConditionalGameEventHandler eventHandler = (IConditionalGameEventHandler)GameEventHandlerFactory.CreateHandler(itemGameEventSO);
 
-        if(itemGameEvent.TryApplyEventToInventory(_shipInventoryService))
+        ComplexItemGameEventSO complexEventSO = itemGameEventSO as ComplexItemGameEventSO;
+
+        if(eventHandler.TryApplyToInventory(_shipInventoryService))
         {
-            _lastGameEventsList.Add(itemGameEventSO);
+            LastGameEventsList.Add(itemGameEventSO);
         }
-        else
+        else if(complexEventSO != null)
         {
-            if(itemGameEvent is ComplexItemGameEvent complexItemGameEvent)
-            {
-                ComplexItemGameEventSO complexItemGameEventSO = (ComplexItemGameEventSO)complexItemGameEvent.eventSO;
-
-                _lastGameEventsList.Add(complexItemGameEventSO.alternativeItemGameEventSO);
-            }
+            LastGameEventsList.Add(complexEventSO.alternativeItemGameEventSO);
         }
     }
 }

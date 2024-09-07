@@ -86,11 +86,12 @@ public class IslandGameManager : MonoBehaviour
 
         _shipInventoryService.Weapon = _playerInventoryService.GetWeapon();
 
-        ShipInventoryService previousShipInventoryService = new(GameProgressDataIO.LoadData().shipInventoryData);
+        GameProgressData gameData = GameProgressDataIO.LoadData();
+        ShipInventoryService generalShipInventoryService = new(gameData.ShipInventoryData);
+        generalShipInventoryService += _shipInventoryService;
 
-        previousShipInventoryService += _shipInventoryService;
-
-        GameProgressDataIO.SaveData(new GameProgressData(previousShipInventoryService, _playerStatsService));
+        GameProgressDataIO.SaveData(new GameProgressData(new(generalShipInventoryService), new(_playerStatsService),
+                                                         new(), gameData.DaysAmount+1));
         SceneManager.LoadScene("ShipScene");
     }
 

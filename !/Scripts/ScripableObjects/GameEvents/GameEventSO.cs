@@ -1,7 +1,8 @@
-using System;
 using UnityEngine;
 
 public abstract class GameEventSO : ScriptableObject
 {
-    public string _description;
+    public string description;
+
+    public abstract void InitializeFromData(object data);
 }

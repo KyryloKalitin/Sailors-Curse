@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
   m_Name: Radio
   m_EditorClassIdentifier: 
-  _description: I was certain I wouldn't find any use for the radio, except perhaps
+  description: I was certain I wouldn't find any use for the radio, except perhaps
     as a footrest, but unexpectedly received a signal emitted not far from my location.
     Upon arrival, all I found were wreckage of a ship and floating crates of provisions.
     I'll never know if that signal was emitted on that fateful day or if I had arrived

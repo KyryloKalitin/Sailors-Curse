@@ -14,8 +14,7 @@ public class ServiceInstaller_ShipScene : MonoInstaller
     private void ShipInventoryServiceBind()
     {
         GameProgressData gameProgressData = GameProgressDataIO.LoadData();
-
-        ShipInventoryService shipInventoryService = new(gameProgressData.shipInventoryData);
+        ShipInventoryService shipInventoryService = new(gameProgressData.ShipInventoryData);
 
         Container.Bind<ShipInventoryService>().FromInstance(shipInventoryService).AsSingle();
     }

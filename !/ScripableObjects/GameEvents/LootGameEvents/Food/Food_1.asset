@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Food_1
   m_EditorClassIdentifier: 
-  _description: There was hardly any food on the ship except for a box of not-so-fresh
+  description: There was hardly any food on the ship except for a box of not-so-fresh
     fruits. But oh well, it could have been worse.
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 5d3c9f142ec0af84ba7be68c8b12d692, type: 2}

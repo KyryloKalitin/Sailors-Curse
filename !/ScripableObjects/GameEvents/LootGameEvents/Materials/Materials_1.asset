@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_1
   m_EditorClassIdentifier: 
-  _description: I'm no sailor, but even I've heard of storms. It's likely that I'll
+  description: I'm no sailor, but even I've heard of storms. It's likely that I'll
     have to patch up the ship at the first sign of trouble, but I haven't found any
     construction materials anywhere. I'll have to tear off rotten pieces from the
     deck; there's no other option.

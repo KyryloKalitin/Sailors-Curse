@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: Heat
   m_EditorClassIdentifier: 
-  _description: That was the hottest day of my life. I could call it hell, but the
+  description: That was the hottest day of my life. I could call it hell, but the
     real hell began when I found myself at sea. In addition to increased water consumption
     due to the heat, some of the food spoiled.
   statsChanged:
