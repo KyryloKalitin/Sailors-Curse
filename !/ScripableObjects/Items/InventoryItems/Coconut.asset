@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Coconut
   inventorySpace: 1
   statsList:
-  - statsType: 0
-    statAmount: 1
   - statsType: 1
+    statAmount: 1
+  - statsType: 2
     statAmount: 1

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: FishingRod
   m_EditorClassIdentifier: 
-  description: The new find was particularly pleasant - a fishing rod. The best part?
-    I found it in the most obvious place, in the closet of one of the sailors, amidst
-    a pile of dirty laundry. Surprised? I wasn't either.
+  description: "I found something great\u2014a fishing rod! The best part? I found
+    it in the most obvious place: in one of the sailors' closets, hidden among a
+    pile of dirty clothes. Surprised? I wasn\u2019t either."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: c39cf59876801cb40b7543da644b21e0, type: 2}
     amount: 1

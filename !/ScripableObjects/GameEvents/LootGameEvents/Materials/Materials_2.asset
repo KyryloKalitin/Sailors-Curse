@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_2
   m_EditorClassIdentifier: 
-  description: Wandering around the ship, I was surprised by the total number of
-    beds in the cabins. Since there's no one else to sleep on them, I'll dismantle
-    them for materials, just in case the ship gets damaged. That sort of thing happens,
-    right...?
+  description: "As I walked around the ship, I was surprised by how many beds were
+    in the cabins. Since no one else is here to use them, I\u2019ll take them apart
+    for materials, just in case the ship gets damaged. That can happen, right..."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: c26fc4943b3ecf64da6974e125ad5eec, type: 2}
     amount: 2

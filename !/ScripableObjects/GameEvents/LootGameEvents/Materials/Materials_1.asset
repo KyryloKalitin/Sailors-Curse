@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_1
   m_EditorClassIdentifier: 
-  description: I'm no sailor, but even I've heard of storms. It's likely that I'll
-    have to patch up the ship at the first sign of trouble, but I haven't found any
-    construction materials anywhere. I'll have to tear off rotten pieces from the
-    deck; there's no other option.
+  description: "I'm not a sailor, but I've heard about storms. I\u2019ll probably
+    need to fix the ship at the first sign of trouble, but I can\u2019t find any
+    materials. I guess I\u2019ll have to take off rotten pieces from the deck; I
+    have no other choice."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 70609473f4a716748b5dac1e06f0b79c, type: 2}
     amount: 8

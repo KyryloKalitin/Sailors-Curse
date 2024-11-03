@@ -1,9 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
-public abstract class InventoryItem : TakeableItem, IUnboxable
+public abstract class InventoryItem : SelectableItem, ITakeableItem, IUnboxable
 {
-    public override abstract _ItemSO ItemSO { get; }
-    public override void Interact(PlayerInventoryService inventory)
+    public abstract _ItemSO ItemSO { get; }
+
+    public void Interact(PlayerInventoryService inventory, Collider collider)
     {
         // Player interact with item
         if (inventory.TryAddToInventoryItemsList(this))
@@ -20,8 +22,12 @@ public abstract class InventoryItem : TakeableItem, IUnboxable
 
     protected void SetTakenItemState()
     {
-        Destroy(gameObject);
+        DOTween.Sequence()
+            .Append(transform.DOScale(Vector3.zero, 0.3f))
+            .Join(transform.DORotate(new Vector3(transform.rotation.x, transform.rotation.y + 360f, transform.rotation.z), 0.3f))
+            .SetLink(gameObject)
+            .OnComplete(() => Destroy(gameObject));
     }
 
-    public abstract void Unbox(ShipInventoryService shipInventory);
+    public abstract void Unbox(ShipZoneInventoryService shipInventory);
 }

@@ -5,29 +5,35 @@ public class ShipZoneTriggerHandler : MonoBehaviour
 {
     [SerializeField] private ShipZoneUI _shipZoneUI;
 
-    private ShipInventoryService _shipInventoryService;
+    public bool IsPlayerStaying => _currentPlayerController != null;
 
-    private bool _isPlayerStaying;
+    private IslandPlayerController _currentPlayerController;
+    private ShipZoneInventoryService _shipInventoryService;
 
     [Inject]
-    public void Construct(ShipInventoryService shipInventoryService)
+    public void Construct(IShipInventoryService shipInventoryService)
     {
-        _shipInventoryService = shipInventoryService;
+        _shipInventoryService = (ShipZoneInventoryService)shipInventoryService;
     }
 
     private void Update()
     {
-        if (IsPlayerStaying())
+        if (IsPlayerStaying)
             _shipZoneUI.Show();
         else
             _shipZoneUI.Hide();
+    }
+
+    public void TakePlayerWeapon()
+    {
+        _shipInventoryService.WeaponSO = _currentPlayerController.PlayerInventoryService.Weapon?.WeaponSO;
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            _isPlayerStaying = true;
+            _currentPlayerController = playerController;
 
             playerController.PlayerInventoryService.UnboxAll(_shipInventoryService);
             return;
@@ -35,7 +41,7 @@ public class ShipZoneTriggerHandler : MonoBehaviour
 
         if(other.gameObject.TryGetComponent(out IUnboxable item))
         {
-            if(other.gameObject.TryGetComponent(out HandheldItem handheldItem) && !handheldItem.HasParent())
+            if(other.gameObject.TryGetComponent(out HandheldItem handheldItem) && !handheldItem.GetComponent<Collider>().isTrigger)
             {
                 item.Unbox(_shipInventoryService);
             }
@@ -46,7 +52,10 @@ public class ShipZoneTriggerHandler : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            _isPlayerStaying = true;
+            _currentPlayerController = playerController;
+
+            playerController.PlayerInventoryService.UnboxAll(_shipInventoryService);
+            return;
         }
     }
 
@@ -54,12 +63,7 @@ public class ShipZoneTriggerHandler : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out IslandPlayerController playerController))
         {
-            _isPlayerStaying = false;
+            _currentPlayerController = null;
         }
     }
-
-    public bool IsPlayerStaying()
-    {
-        return _isPlayerStaying;
-    }   
 }

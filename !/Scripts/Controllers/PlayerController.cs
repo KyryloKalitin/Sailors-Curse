@@ -14,12 +14,13 @@ public abstract class PlayerController : MonoBehaviour
 
     [Header("Basic physical parameters")]
 
-    [SerializeField] protected float _movementSpeed;
-    [SerializeField] protected float _maxHorizontalSpeed;
+    [SerializeField] private float _acceleration;
+    [SerializeField] private float _maxHorizontalSpeed;
 
-    protected float _yRotation = 0f;
+    private float _yRotation = 0f;
 
     protected Rigidbody _rigidbody;
+    protected Collider _collider;
     protected InputService _inputService;
 
     protected CompositePlayerState _playerState = new()
@@ -29,10 +30,11 @@ public abstract class PlayerController : MonoBehaviour
         _lastMainPlayerState = PlayerState.None,
         _lastSecondaryPlayerState = PlayerState.None
     };
-    protected abstract void UpdatePlayerState();
 
-    protected SelectableItem _selectedItem = null;
-    protected SelectableItem _lastSelectedItem = null;
+    protected SelectableItem _selectedItem;
+    protected SelectableItem _lastSelectedItem;
+
+    protected abstract void UpdatePlayerState();
 
     #region Lifecycle methods
 
@@ -41,23 +43,28 @@ public abstract class PlayerController : MonoBehaviour
     {
         _inputService = inputService;
     }
-    private void Awake()
+
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
     }
-    private void Update()
+
+    protected virtual void Update()
     {
         UpdatePlayerState();
         ApplyPlayerStateIfChanged();
         Rotate();
     }
+
     protected virtual void FixedUpdate()
     {
         Move();
     }
+
     #endregion Lifecycle methods
 
-    protected void ApplyPlayerStateIfChanged()
+    private void ApplyPlayerStateIfChanged()
     {
         bool isStateChanged = _playerState._currentMainPlayerState != _playerState._lastMainPlayerState ||
                                 _playerState._currentSecondaryPlayerState != _playerState._lastSecondaryPlayerState ||
@@ -76,28 +83,32 @@ public abstract class PlayerController : MonoBehaviour
 
             _playerState._lastMainPlayerState = _playerState._currentMainPlayerState;
 
-            Debug.Log(_playerState._currentMainPlayerState + " " + _playerState._currentSecondaryPlayerState);
             OnChangedPlayerState?.Invoke(_playerState);
         }
     }
 
-    protected void Move()
-    {
+    private void Move()
+    {        
         Vector2 inputVector = _inputService.GetMovementNormalizedVector();
+
+        if (inputVector == Vector2.zero)
+            return;
+
         Vector3 forceVector = new Vector3(inputVector.x, 0f, inputVector.y);
 
         forceVector = transform.TransformDirection(forceVector);
 
-        _rigidbody.AddForce(forceVector * _movementSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        _rigidbody.AddForce(forceVector * _acceleration , ForceMode.Acceleration);
 
-        Vector3 clampedVelocity = new Vector3(  (Vector3.ClampMagnitude(_rigidbody.velocity, _maxHorizontalSpeed)).x, 
-                                                _rigidbody.velocity.y, 
-                                                (Vector3.ClampMagnitude(_rigidbody.velocity, _maxHorizontalSpeed)).z);
+        Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, _maxHorizontalSpeed);
+
+        Vector3 clampedVelocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
 
         _rigidbody.velocity = clampedVelocity;
     }
 
-    protected void Rotate()
+    private void Rotate()
     {
         Vector2 mouseVector = _inputService.GetMouseVector();
 

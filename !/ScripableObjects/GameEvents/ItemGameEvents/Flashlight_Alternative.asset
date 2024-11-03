@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
+  m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: Flashlight_Alternative
   m_EditorClassIdentifier: 
-  description: At night, I didn't notice the rocks and severely damaged the ship.
-    Perhaps if I had a flashlight, this wouldn't have happened.
+  description: "At night, I didn\u2019t see the rocks and badly damaged the ship.
+    Maybe if I had a flashlight, this wouldn\u2019t have happened."
   statsChanged:
-  - statsType: 2
+  - statsType: 3
     statAmount: -5
-  rareInventoryItemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0,
-    type: 2}

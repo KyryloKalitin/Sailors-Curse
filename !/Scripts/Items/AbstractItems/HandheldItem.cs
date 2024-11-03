@@ -1,53 +1,24 @@
-using System.Collections.Generic;
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class HandheldItem : TakeableItem
+public abstract class HandheldItem : SelectableItem, ITakeableItem
 {
-    public override abstract _ItemSO ItemSO { get; }
+    public bool CanBePlaced { get; protected set; } = true;
 
-    public bool HasParent()
-    {
-        return _hasParent;
-    }
-    public bool CanBePlaced()
-    {
-        return _canBePlaced;
-    }
-
-    protected bool _canBePlaced = true;
-    protected bool _hasParent;
+    private bool _isAnimating = false;
 
     private Transform _lastParent;
 
-    private List<LayerMask> _ignoredLayers;
+    private LayerMask _ignoredLayers;
 
     private Collider _collider;
     private Rigidbody _rigidbody;
 
-    public override void Interact(PlayerInventoryService inventory)
-    {
-        // Player interact with item
-        if(inventory.TrySetHandheldItem(this))
-        {
-            // Player interact with item on the ground
-            SetTakenItemState();
-        }
-        else if (_canBePlaced)
-        {
-            // Player interact with item in his hands, let's drop it
-            SetDroppedItemState();
-        }
-        else
-        {
-            // Player interact with item in his hands but can't drop it
-        }
-    }
-    public void SetParent(Transform newParent)
-    {
-        _lastParent = transform.parent;
-        transform.parent = newParent;
-    }
+    private Collider _playerCollider;
+
+    private const float _itemThrowForce = 10f;
 
     protected override void Awake()
     {
@@ -56,54 +27,126 @@ public abstract class HandheldItem : TakeableItem
         _collider = GetComponent<Collider>();
         _rigidbody = GetComponent<Rigidbody>();
 
-        _ignoredLayers = new List<LayerMask>();
+        _ignoredLayers = LayerMask.GetMask("Player", "Ignore Raycast", "Weapon");
+    }
 
-        _ignoredLayers.Add(LayerMask.NameToLayer("Player"));
-        _ignoredLayers.Add(LayerMask.NameToLayer("Ignore Raycast"));
+    public void Interact(PlayerInventoryService inventory, Collider collider)
+    {
+        if (_isAnimating)
+            return;
+
+        // Player interact with item
+        if(inventory.TrySetHandheldItem(this))
+        {
+            // Player interact with item on the ground
+            SetTakenItemState();
+
+            _playerCollider = collider;
+        }
+        else if (CanBePlaced)
+        {
+            // Player interact with item in his hands, let's drop it
+            SetDroppedItemState();            
+        }
+        else
+        {
+            // Player interact with item in his hands but can't drop it
+        }
+    }
+
+    public void SetParent(Transform newParent)
+    {
+        if (newParent == null)
+        {
+            Transform currentParent = transform.parent;
+
+            transform.parent = _lastParent;
+
+            _lastParent = currentParent;
+        }
+        else
+        {
+            _lastParent = transform.parent;
+            transform.parent = newParent;
+        }
     }
 
     private void SetDroppedItemState()
     {
+        IgnorePlayerCollision(true);
+
+        StartCoroutine(EnableCollisionAfterDelayCoroutine());
+
         _collider.isTrigger = false;
         _rigidbody.isKinematic = false;
 
-        transform.parent = _lastParent;
-
-        _hasParent = false;
+        // Apply force to simulate a throw
+        _rigidbody.AddForce(_lastParent.transform.forward * _itemThrowForce, ForceMode.Impulse);        
     }
+
+    private IEnumerator EnableCollisionAfterDelayCoroutine()
+    {
+        yield return new WaitWhile(() => _playerCollider != null && _collider.bounds.Intersects(_playerCollider.bounds));
+
+        IgnorePlayerCollision(false);
+
+        _playerCollider = null;
+    }
+
     private void SetTakenItemState()
     {
+        TakenAnimation();
+
         _collider.isTrigger = true;
         _rigidbody.isKinematic = true;
+    }
 
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+    private void TakenAnimation()
+    {
+        _isAnimating = true;
 
-        _hasParent = true;
+        DOTween.Sequence()
+            .Append(transform.DOLocalMove(Vector3.zero, 0.3f))
+            .Join(transform.DOLocalRotateQuaternion(Quaternion.identity, 0.3f))
+            .SetLink(gameObject)
+            .OnComplete(() =>
+            {
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+
+                _isAnimating = false;
+            });
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_ignoredLayers.Contains(other.gameObject.layer))
+        if ((_ignoredLayers & (1 << other.gameObject.layer)) != 0)
             return;
 
-        _canBePlaced = false;
+        CanBePlaced = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_ignoredLayers.Contains(other.gameObject.layer))
+        if ((_ignoredLayers & (1 << other.gameObject.layer)) != 0)
             return;
-
-        _canBePlaced = false;
+        
+        CanBePlaced = false;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_ignoredLayers.Contains(other.gameObject.layer))
+        if ((_ignoredLayers & (1 << other.gameObject.layer)) != 0)
             return;
-
-        _canBePlaced = true;
+        
+        CanBePlaced = true;
     }
 
+    private void IgnorePlayerCollision(bool ignore)
+    {
+        if (_playerCollider != null)
+        {
+            Physics.IgnoreCollision(_playerCollider, _collider, ignore);
+        }
+    }
 }

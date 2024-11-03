@@ -8,11 +8,11 @@ public struct ShipInventoryData
     public int waterAmount;
     public int materialAmount;
 
-    public List<RareInventoryItemSO> rareItemsList;
+    public List<string> rareItemSONames;
 
-    public WeaponSO weaponSO;
+    public string weaponSOName;
 
-    public ShipInventoryLevelSO shipInventoryLevel;
+    public string shipInventoryLevelSOName;
 
     public ShipInventoryData(ShipInventoryService shipInventoryService)
     {
@@ -20,14 +20,19 @@ public struct ShipInventoryData
         waterAmount = shipInventoryService.WaterAmount;
         materialAmount = shipInventoryService.MaterialsAmount;
 
-        rareItemsList = shipInventoryService.RareItemsList;
+        rareItemSONames = new();
 
-        if (shipInventoryService.Weapon != null)
-            weaponSO = (WeaponSO)shipInventoryService.Weapon.ItemSO;
+        foreach (var item in shipInventoryService.RareItemsList)
+        {
+            rareItemSONames.Add(item.name);
+        }
+
+        if (shipInventoryService.WeaponSO != null)
+            weaponSOName = shipInventoryService.WeaponSO.name;
         else
-            weaponSO = null;
+            weaponSOName = null;
 
-        shipInventoryLevel = shipInventoryService.CurrentShipInventoryLevelSO;
+        shipInventoryLevelSOName = shipInventoryService.CurrentShipInventoryLevelSO.name;
     }
 }
 

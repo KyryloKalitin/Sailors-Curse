@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Binoculars
   m_EditorClassIdentifier: 
-  description: How ironic, there was a pair of binoculars hanging on a hook in the
-    storeroom, but what am I supposed to look at with them? The seabed? Although,
-    who knows...
+  description: "How ironic\u2014there was a pair of binoculars hanging on a hook
+    in the storeroom. But what am I supposed to look at? The seabed? Although, who
+    knows..."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 71acf6d394077a742aa60e3878971814, type: 2}
     amount: 1

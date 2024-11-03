@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: Stress
   m_EditorClassIdentifier: 
-  description: The stress caused by loneliness is taking its toll. I lost control
-    and ate much more than I should have, hoping to lift my spirits. It was a mistake,
-    and it won't happen again.
+  description: "The stress of being alone is getting to me. I lost control and ate
+    more than I should have, thinking it would make me feel better. It was a mistake,
+    and I won\u2019t do it again."
   statsChanged:
-  - statsType: 0
+  - statsType: 1
     statAmount: -3

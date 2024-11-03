@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7b007a8cb87f5419c8a73136ec0372, type: 3}
+  m_Name: RareItemSOSet
+  m_EditorClassIdentifier: 
+  rareItemSOList:
+  - {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0, type: 2}
+  - {fileID: 11400000, guid: c39cf59876801cb40b7543da644b21e0, type: 2}
+  - {fileID: 11400000, guid: 71acf6d394077a742aa60e3878971814, type: 2}
+  - {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2, type: 2}

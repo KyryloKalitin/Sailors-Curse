@@ -16,4 +16,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   itemName: Pipe
   damage: 6
-  coolDawn: 2
+  holdingPosition: {x: 0.185, y: -0.056, z: 0.338}
+  holdingRotation: {x: 0.0000000031534384, y: -0.0000000038467225, z: 0.7071068, w: 0.7071068}
+  hiddenPosition: {x: 0.141, y: 0, z: -0.05}
+  hiddenRotation: {x: 0.35355344, y: -0.6123723, z: 0.3535533, w: 0.61237264}
+  coolDown: 0

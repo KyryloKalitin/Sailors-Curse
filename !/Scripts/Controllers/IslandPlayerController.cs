@@ -1,30 +1,27 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public partial class IslandPlayerController : PlayerController
 {   
-    [SerializeField] private GroundCheckService _groundCheckService;
-    [SerializeField] public PlayerAttackZoneTriggerHandler AttackZone { get; private set; }
+    public PlayerAttackZoneTriggerHandler AttackZone { get; private set; }
+    public PlayerInventoryService PlayerInventoryService { get; private set; }
+    public PlayerStatsService PlayerStatsService { get; private set; }
 
+    [SerializeField] private GroundCheckService _groundCheckService;
     [SerializeField] private HoldPoints _holdPoints;
 
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _fallingAcceleration;
 
-    public PlayerInventoryService PlayerInventoryService { get; private set; }
-    public PlayerStatsService PlayerStatsService { get; private set; }
-
-    private IslandGameManager _islandGameManager;
+    private GameTimerService _gameTimerService;
 
     private bool _isJumping;
     private bool _isFalling
     {
         get
         {
-            return _rigidbody.velocity.y <= -0.5f;
+            return _rigidbody.velocity.y < -0.2;
         }
     }
     private bool _isGrounded
@@ -35,8 +32,127 @@ public partial class IslandPlayerController : PlayerController
         }
     }
 
+    #region Lifecycle methods
+
+    [Inject]
+    public void Construct(PlayerInventoryService playerInventoryService, PlayerStatsService playerStatsService, GameTimerService gameTimerService)
+    {
+        PlayerStatsService = playerStatsService;
+        PlayerInventoryService = playerInventoryService;
+
+        _gameTimerService = gameTimerService;
+
+        PlayerInventoryService.SetHoldPoints(_holdPoints);
+    }
+
+    private void Start()
+    {
+        _gameTimerService.OnCountdownStarted += _gameTimerService_OnCountdownStarted;
+        _gameTimerService.OnGameplayStarted += _gameTimerService_OnGameStarted;
+
+        _inputService.playerInput.Movement.Jump.performed += Jump_performed;
+        _inputService.playerInput.Interactions.Interact.performed += Interact_performed;
+        _inputService.playerInput.Attack.Attack.performed += Attack_performed;
+
+        _cameraController.OnSelectedItem += _cameraController_OnSelectedItem;
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        SetFallingAcceleration();
+    }
+
+    private void OnDestroy()
+    {
+        _gameTimerService.OnCountdownStarted -= _gameTimerService_OnCountdownStarted;
+        _gameTimerService.OnGameplayStarted -= _gameTimerService_OnGameStarted;
+
+        _inputService.playerInput.Movement.Jump.performed -= Jump_performed;
+        _inputService.playerInput.Interactions.Interact.performed -= Interact_performed;
+        _inputService.playerInput.Attack.Attack.performed -= Attack_performed;
+
+        _cameraController.OnSelectedItem -= _cameraController_OnSelectedItem;
+    }
+
+    #endregion Lifecycle methods
+
+    #region Event handlers
+
+    protected void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (_selectedItem != null)
+        {
+            if(_selectedItem is ITakeableItem takeableItem)
+            {
+                takeableItem.Interact(PlayerInventoryService, _collider);
+            }
+
+            if(_selectedItem is IUntakeableItem untakeableItem)
+            {
+                untakeableItem.Interact();
+            }
+        }
+    }
+
+    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (PlayerInventoryService.CanWeaponAttack())
+            PlayerInventoryService.Weapon.Attack();
+    }
+
+    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (_isGrounded)
+            StartCoroutine(JumpCoroutine());
+    }
+
+    private void _gameTimerService_OnCountdownStarted()
+    {
+        _inputService.EnableCameraLook(true);
+
+        _inputService.SetCursorMode(CursorMode.Game);
+    }
+
+    private void _gameTimerService_OnGameStarted()
+    {
+        _inputService.EnableInteractions(true);
+        _inputService.EnableMovement(true);
+        _inputService.EnableAttack(true);
+    }
+
+    protected void _cameraController_OnSelectedItem(SelectableItem item)
+    {
+        if(!PlayerInventoryService.IsSelectionEnabled())
+        {
+            _selectedItem?.SetSelectionState(false);
+            _lastSelectedItem?.SetSelectionState(false);
+            
+            return;
+        }
+
+        if (item == PlayerInventoryService.Weapon && PlayerInventoryService.Weapon != null)
+            return;
+
+        _lastSelectedItem = _selectedItem;
+        _selectedItem = item;
+
+        _selectedItem?.SetSelectionState(true);
+
+        if (_lastSelectedItem != _selectedItem)
+            _lastSelectedItem?.SetSelectionState(false);
+    }
+
+    #endregion Event handlers
+
     protected override void UpdatePlayerState()
-    {  
+    {
+        UpdateMainPlayerState();
+        UpdateSecondaryPlayerState();
+    }
+
+    private void UpdateMainPlayerState()
+    {
         if (_isJumping)
         {
             _playerState._currentMainPlayerState = PlayerState.Jump;
@@ -49,14 +165,17 @@ public partial class IslandPlayerController : PlayerController
         {
             _playerState._currentMainPlayerState = PlayerState.Idle;
         }
+    }
 
-        if (PlayerInventoryService.GetHandheldItem() != null)
+    private void UpdateSecondaryPlayerState()
+    {
+        if (PlayerInventoryService.HandheldItem != null)
         {
             _playerState._currentSecondaryPlayerState = PlayerState.HasItem;
         }
-        else if (PlayerInventoryService.GetWeapon() != null)
+        else if (PlayerInventoryService.Weapon != null)
         {
-            if (PlayerInventoryService.GetWeapon().IsAttacking)
+            if (PlayerInventoryService.Weapon.IsAttacking)
             {
                 _playerState._currentSecondaryPlayerState = PlayerState.Attack;
             }
@@ -70,116 +189,6 @@ public partial class IslandPlayerController : PlayerController
             _playerState._currentSecondaryPlayerState = PlayerState.FreeHands;
         }
     }
-
-
-    [Inject]
-    public void Construct(PlayerInventoryService playerInventoryService, PlayerStatsService playerStatsService, IslandGameManager islandGameManager)
-    {
-        PlayerStatsService = playerStatsService;
-        PlayerInventoryService = playerInventoryService;
-        _islandGameManager = islandGameManager;
-
-        PlayerInventoryService.SetHoldPoints(_holdPoints);
-    }
-
-    #region Lifecycle methods
-
-    private void Start()
-    {
-        _islandGameManager.OnGameStarted += _gameManager_OnGameStarted;
-        _islandGameManager.OnGameLost += _gameManager_OnGameLost;
-    }
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        SetFallingAcceleration();
-    }
-    private void OnDestroy()
-    {
-        _inputService.playerInput.Movement.Jump.performed -= Jump_performed;
-        _inputService.playerInput.Interactions.Interact.performed -= Interact_performed;
-        _inputService.playerInput.Attack.Attack.performed -= Attack_performed;
-
-        _cameraController.OnSelectedItem -= _cameraController_OnSelectedItem;
-    }
-    #endregion Lifecycle methods
-
-    #region Event handlers
-    protected void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        if (_selectedItem != null)
-        {
-            if(_selectedItem is TakeableItem)
-            {
-                TakeableItem selectedItem = _selectedItem as TakeableItem;
-
-                selectedItem.Interact(PlayerInventoryService);
-            }
-
-            if(_selectedItem is UntakeableItem)
-            {
-                UntakeableItem selectedItem = _selectedItem as UntakeableItem;
-
-                selectedItem.Interact();
-            }
-        }
-    }
-
-    protected void _cameraController_OnSelectedItem(SelectableItem item)
-    {
-        if (PlayerInventoryService.IsSelectionEnabled())
-        {
-            if (item == PlayerInventoryService.GetWeapon() && item != null)
-                return;
-
-            _lastSelectedItem = _selectedItem;
-
-            _selectedItem = item;
-
-            if (_selectedItem != null)
-                _selectedItem.SetSelectionState(true);
-
-            if (_lastSelectedItem != null && _lastSelectedItem != _selectedItem)
-                _lastSelectedItem.SetSelectionState(false);
-        }
-        else
-        {
-            if (_selectedItem != null)
-                _selectedItem.SetSelectionState(false);
-
-            if(_lastSelectedItem != null)
-                _lastSelectedItem.SetSelectionState(false);
-        }
-    }
-    private void _gameManager_OnGameStarted()
-    {
-        _inputService.playerInput.Movement.Jump.performed += Jump_performed;
-        _inputService.playerInput.Interactions.Interact.performed += Interact_performed;
-        _inputService.playerInput.Attack.Attack.performed += Attack_performed;
-
-        _cameraController.OnSelectedItem += _cameraController_OnSelectedItem;
-
-        _inputService.SetMovementEnabled(true);
-
-        _inputService.SetCursorEnabled(false);
-    }
-    private void _gameManager_OnGameLost()
-    {
-        _inputService.SetMovementEnabled(false);
-
-        _inputService.SetCursorEnabled(true);
-    }
-    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        if (PlayerInventoryService.CanWeaponAttack())
-            PlayerInventoryService.GetWeapon().Attack();
-    }
-    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        if (_isGrounded)
-            StartCoroutine(JumpCoroutine());
-    }
-    #endregion Event handlers
 
     private IEnumerator JumpCoroutine()
     {
@@ -195,19 +204,12 @@ public partial class IslandPlayerController : PlayerController
 
         _isJumping = false;
     }
+
     private void SetFallingAcceleration()
     {
         if (_isFalling)
         {
             _rigidbody.AddForce(-transform.up * _fallingAcceleration, ForceMode.Acceleration);
         }
-    }
-
-    [Serializable]
-    public struct HoldPoints
-    {
-        public Transform itemHoldPoint;
-        public Transform weaponHoldPoint;
-        public Transform weaponIdleHoldPoint;
     }
 }

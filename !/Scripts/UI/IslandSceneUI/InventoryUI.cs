@@ -7,6 +7,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Transform _itemContainer;
     [SerializeField] private Transform _itemPrefab;
 
+    private List<Transform> _slotsList;
+
     private PlayerInventoryService _playerInventoryService;
 
     [Inject]
@@ -25,7 +27,6 @@ public class InventoryUI : MonoBehaviour
     }
 
 
-    private List<Transform> _slotsList;
     private void RefreshInventoryUI()
     {
         foreach (Transform child in _itemContainer)
@@ -35,7 +36,7 @@ public class InventoryUI : MonoBehaviour
             _slotsList.Clear();
         }
 
-        for (int i = 0; i < _playerInventoryService._maxItemsCount; i++)
+        for (int i = 0; i < _playerInventoryService.MaxCapacity; i++)
         {
             _slotsList.Add(Instantiate(_itemPrefab, _itemContainer));
         }

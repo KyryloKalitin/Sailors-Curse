@@ -88,8 +88,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2289084707754589168, guid: 8ca10f0fdc1a3814f9f7032c8c11a336,
         type: 3}
+      propertyPath: m_Center.x
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289084707754589168, guid: 8ca10f0fdc1a3814f9f7032c8c11a336,
+        type: 3}
       propertyPath: m_Center.y
-      value: 0.15
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 6238807030284355854, guid: 8ca10f0fdc1a3814f9f7032c8c11a336,
         type: 3}
@@ -174,7 +179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2475806478640105666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 275e66f2406b7694388f5e54b11250fb, type: 3}
+  m_Script: {fileID: 11500000, guid: b7cd30fd6f4f81e4caaa2ac180a8a533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rareItemSO: {fileID: 11400000, guid: 725b5affa139584478a67cca5bb5bad0, type: 2}

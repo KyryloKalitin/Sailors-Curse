@@ -1,21 +1,19 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStatsService : IDamageable
 {
     public event Action OnPlayerDied;
 
-    public float HP { get; private set; }
-    public List<TypedHit> TypedHitsList { get; private set; }    
+    public float HP { get; private set; } = 100f;
+    public List<TypedHit> TypedHitsList { get; private set; } = new();
 
     public PlayerStatsService()
     {
-        HP = 100f;
 
-        TypedHitsList = new List<TypedHit>();
     }
-    public PlayerStatsService(PlayerStatsData data)
+
+    public void DeserializeFromData(PlayerStatsData data)
     {
         HP = data.HP;
         TypedHitsList = data.typedHitsList;
@@ -23,32 +21,17 @@ public class PlayerStatsService : IDamageable
 
     public void ApplyDamage(float damage, DamageType damageType)
     {
-        HP -= damage;
-
-        if (HP <= 0)
+        if (HP - damage <= 0)
         {
+            HP = 0;
             OnPlayerDied?.Invoke();
-            Debug.Log("Player died");
         }
         else
         {
-            Debug.Log(HP);
+            HP -= damage;
         }
 
-        if(damageType != DamageType.None)
+        if (damageType != DamageType.None)
             TypedHitsList.Add(new TypedHit(damage, damageType));
-    }
-}
-
-[Serializable]
-public struct TypedHit
-{
-    public float damage;
-    public DamageType damageType;
-
-    public TypedHit(float damage, DamageType damageType)
-    {
-        this.damage = damage;
-        this.damageType = damageType;
     }
 }

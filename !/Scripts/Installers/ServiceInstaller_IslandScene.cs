@@ -1,4 +1,3 @@
-using UnityEngine;
 using Zenject;
 
 public class ServiceInstaller_IslandScene : MonoInstaller
@@ -6,10 +5,16 @@ public class ServiceInstaller_IslandScene : MonoInstaller
     public override void InstallBindings()
     {
         InputServiceBind();
-
-        ShipInventoryServiceBind();
+        SceneLoaderBind();
+        GameTimerServiceBind();
+        ShipZoneInventoryServiceBind();
         PlayerInventoryServiceBind();
         PlayerStatsServiceBind();
+    }
+
+    private void GameTimerServiceBind()
+    {
+        Container.Bind<GameTimerService>().FromNew().AsSingle();
     }
 
     private void PlayerStatsServiceBind()
@@ -22,18 +27,25 @@ public class ServiceInstaller_IslandScene : MonoInstaller
         Container.Bind<InputService>().FromNew().AsSingle();
     }
 
-    public void ShipInventoryServiceBind()
+    private void ShipZoneInventoryServiceBind()
     {
-        GameProgressData gameProgressData = GameProgressDataIO.LoadData();        
-
-        ShipInventoryService shipInventoryService = new() { CurrentShipInventoryLevelSO = gameProgressData.ShipInventoryData.shipInventoryLevel };
-
-        Container.Bind<ShipInventoryService>().FromInstance(shipInventoryService).AsSingle();
+        Container.Bind<IShipInventoryService>().To<ShipZoneInventoryService>().FromNew().AsSingle();
     }
 
-    public void PlayerInventoryServiceBind()
+    private void PlayerInventoryServiceBind()
     {
         Container.Bind<PlayerInventoryService>().FromNew().AsSingle();
+    }
+
+    private void SceneLoaderBind()
+    {
+        var sceneLoader = Container.InstantiateComponentOnNewGameObject<SceneLoadService>("SceneLoader");
+
+        Container
+            .Bind<SceneLoadService>()
+            .FromInstance(sceneLoader)
+            .AsSingle()
+            .NonLazy();
     }
 }
 

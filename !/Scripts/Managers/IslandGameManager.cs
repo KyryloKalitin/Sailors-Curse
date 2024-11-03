@@ -6,59 +6,49 @@ using Zenject;
 
 public class IslandGameManager : MonoBehaviour
 {
-    public event Action OnWaitingStarted;
-    public event Action OnGameStarted;
-
-    public event Action OnGameWon;
-    public event Action OnGameLost;
-
-    private float _waitingToStartTime = 1f;
-    private float _countdownToStartTime = 3f;
-    private float _gameTime = 120f;
-
+    private GameTimerService _gameTimerService;
     private PlayerStatsService _playerStatsService;
-    private PlayerInventoryService _playerInventoryService;
-    private ShipZoneTriggerHandler _shipZoneTriggerHandler;
+    private LoadingScreenController _loadingScreenController;
 
-    private ShipInventoryService _shipInventoryService;
+    private GameState _currentGameState = GameState.None;
 
+    private GameWinHandler _gameWinHandler;
+    private GameLoseHandler _gameLoseHandler;
 
-    private GameState _currentGameState = GameState.WaitingToStart;
-    private GameState _lastGameState = GameState.None;
+    private LosingReasonSOSet.LosingReason _losingReason;
 
     [Inject]
-    public void Construct(ShipInventoryService shipInventoryService, PlayerInventoryService playerInventoryService, PlayerStatsService playerStatsService, ShipZoneTriggerHandler shipZoneTriggerHandler)
+    public void Construct(PlayerStatsService playerStatsService, LoadingScreenController loadingScreenController, GameTimerService gameTimerService, GameWinHandler gameWinHandler, GameLoseHandler gameLoseHandler)
     {
-        _playerInventoryService = playerInventoryService;
-        _shipInventoryService = shipInventoryService;
         _playerStatsService = playerStatsService;
-        _shipZoneTriggerHandler = shipZoneTriggerHandler;
+        _loadingScreenController = loadingScreenController;
+        _gameTimerService = gameTimerService;
+
+        _gameWinHandler = gameWinHandler;
+        _gameLoseHandler = gameLoseHandler;
     }
 
     private void Start()
     {
+        _gameTimerService.OnCountdownEnded += _gameTimerService_OnCountdownEnded;
+        _gameTimerService.OnGameplayEnded += _gameTimerService_OnGameplayEnded;
+
         _playerStatsService.OnPlayerDied += _playerStatsService_OnPlayerDied;
+
+        _loadingScreenController.GetComponentInChildren<LoadingScreenBackground>().OnAnimationEnded += IslandGameManager_OnAnimationEnded;
     }
 
-    private void Update()
+    private void UpdateGameState(GameState newState)
     {
-        UpdateGameState();
-    }
-
-    private void UpdateGameState()
-    {
-        if (_currentGameState == _lastGameState)
+        if (_currentGameState == newState)
             return;
 
-        _lastGameState = _currentGameState;
+        _currentGameState = newState;
 
         switch (_currentGameState)
         {
-            case GameState.WaitingToStart:
-                StartCoroutine(WaitingToStartCoroutine());
-                break;
             case GameState.CountdownToStart:
-                StartCoroutine(CountdownToStartCoroutine());
+                CountdownToStart();
                 break;
             case GameState.GamePlaying:
                 GamePlaing();
@@ -72,74 +62,152 @@ public class IslandGameManager : MonoBehaviour
         }       
     }
 
-    private void GamePlaing()
+    private void CountdownToStart()
     {
-        OnGameStarted?.Invoke();
-
-        StartCoroutine(GamePlayCorountine());
+        StartCoroutine(_gameTimerService.CountdownToStartCoroutine());
     }
 
+    private void GamePlaing()
+    {
+        StartCoroutine(_gameTimerService.GamePlayCorountine());
+    }
 
     private void Winning()
     {
-        OnGameWon?.Invoke();
-
-        _shipInventoryService.Weapon = _playerInventoryService.GetWeapon();
-
-        GameProgressData gameData = GameProgressDataIO.LoadData();
-        ShipInventoryService generalShipInventoryService = new(gameData.ShipInventoryData);
-        generalShipInventoryService += _shipInventoryService;
-
-        GameProgressDataIO.SaveData(new GameProgressData(new(generalShipInventoryService), new(_playerStatsService),
-                                                         new(), gameData.DaysAmount+1));
-        SceneManager.LoadScene("ShipScene");
+        _gameWinHandler.HandleWin();
     }
 
     private void Losing()
     {
-        OnGameLost?.Invoke();
-
-        SceneManager.LoadScene("MainMenu");
-        GameProgressDataIO.DeleteGameProgressData();
+        _gameLoseHandler.HandleLose(_losingReason);
     }
 
+    private void IslandGameManager_OnAnimationEnded()
+    {
+        UpdateGameState(GameState.CountdownToStart);
+    }
 
     private void _playerStatsService_OnPlayerDied()
     {
-        _currentGameState = GameState.Losing;
+        _losingReason = LosingReasonSOSet.LosingReason.PlayerDied;
+
+        UpdateGameState(GameState.Losing);
     }
 
-    private IEnumerator WaitingToStartCoroutine()
+    private void _gameTimerService_OnGameplayEnded()
     {
-        yield return new WaitForSeconds(_waitingToStartTime);
-
-        _currentGameState = GameState.CountdownToStart;
+        CalculateGameResult();
     }
 
-    private IEnumerator CountdownToStartCoroutine()
+    private void CalculateGameResult()
     {
-        for (int i = 1; i <= _countdownToStartTime; i++)
+        var lastState = _gameWinHandler.IsPlayerInWinningZone ? GameState.Winning : GameState.Losing;
+
+        if (lastState == GameState.Losing)
+            _losingReason = LosingReasonSOSet.LosingReason.EndTime;
+
+        UpdateGameState(lastState);       
+    }
+
+    private void _gameTimerService_OnCountdownEnded()
+    {
+        UpdateGameState(GameState.GamePlaying);
+    }
+}
+
+public class GameTimerService
+{
+    public event Action OnCountdownStarted;
+    public event Action OnGameplayStarted;
+
+    public event Action OnCountdownEnded;
+    public event Action OnGameplayEnded;
+
+    public float CountdownToStartTime { get; private set; } = 3f;
+    public float GamePlayTime { get; private set; } = 60f;
+
+    public IEnumerator CountdownToStartCoroutine()
+    {
+        OnCountdownStarted?.Invoke();
+
+        while (CountdownToStartTime > 0)
         {
-            Debug.Log(i);
             yield return new WaitForSeconds(1f);
+            CountdownToStartTime--;
         }
 
-        _currentGameState = GameState.GamePlaying;
+        OnCountdownEnded?.Invoke();
     }
 
-    private IEnumerator GamePlayCorountine()
+    public IEnumerator GamePlayCorountine()
     {
-        Debug.Log("Game started!");
+        OnGameplayStarted?.Invoke();
 
-        for (int i = 1; i <= _gameTime; i++)
+        while (GamePlayTime > 0)
         {
-            //Debug.Log(i);
             yield return new WaitForSeconds(1f);
+            GamePlayTime--;
         }
 
-        if (_shipZoneTriggerHandler.IsPlayerStaying())
-            _currentGameState = GameState.Winning;
-        else
-            _currentGameState = GameState.Losing;
+        OnGameplayEnded?.Invoke();
     }
+}
+
+public class GameWinHandler
+{
+    public bool IsPlayerInWinningZone => _shipZoneTriggerHandler.IsPlayerStaying;
+
+    private ShipZoneTriggerHandler _shipZoneTriggerHandler;
+    private SceneLoadService _sceneLoader;
+
+    private PlayerStatsService _playerStatsService;
+    private ShipZoneInventoryService _shipZoneInventoryService;
+
+    [Inject]
+    public void Construct(  ShipZoneTriggerHandler shipZoneTriggerHandler, IShipInventoryService shipZoneInventoryService,
+                            SceneLoadService sceneLoadService, PlayerStatsService playerStatsService)
+    {
+        _shipZoneTriggerHandler = shipZoneTriggerHandler;
+        _shipZoneInventoryService = (ShipZoneInventoryService)shipZoneInventoryService;
+        _sceneLoader = sceneLoadService;
+        _playerStatsService = playerStatsService;
+    }
+
+    public void HandleWin()
+    {
+        SaveRoundProgress();
+        _sceneLoader.Load(SceneLoadService.Scene.Ship);
+    }
+
+    private void SaveRoundProgress()
+    {
+        _shipZoneTriggerHandler.TakePlayerWeapon();
+
+        GameProgressData gameData = GameProgressDataIO.LoadData();
+
+        ShipInventoryService shipInventoryService = new();
+        shipInventoryService.DeserializeFromData(gameData.ShipInventoryData);
+
+        shipInventoryService.ApplyChangesAfterRound(_shipZoneInventoryService);
+
+        GameProgressDataIO.SaveData(new GameProgressData(shipInventoryService, _playerStatsService, gameData.DaysAmount + 1));
+    }
+}
+
+public class GameLoseHandler
+{
+    private SceneLoadService _sceneLoader;
+
+    [Inject]
+    public void Construct(SceneLoadService sceneLoadService)
+    {
+        _sceneLoader = sceneLoadService;
+    }
+
+    public void HandleLose(LosingReasonSOSet.LosingReason losingReason)
+    {
+        LosingReasonSOSet.currentLosingReason = losingReason;
+
+        _sceneLoader.Load(SceneLoadService.Scene.Losing);
+    }    
 }

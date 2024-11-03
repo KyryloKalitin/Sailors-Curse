@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class CraftTable : UntakeableItem
+public class CraftTable : SelectableItem, IUntakeableItem
 {
-    public override void Interact()
+    public void Interact()
     {
         Debug.Log("Soon...");
     }

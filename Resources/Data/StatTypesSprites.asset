@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: StatTypesSprites
   m_EditorClassIdentifier: Assembly-CSharp::StatsTypesSprites
   foodSprite:
-    statsType: 0
+    statsType: 1
     sprite: {fileID: 21300000, guid: 311140e9d561132439514a67d7aed339, type: 3}
   waterSprite:
-    statsType: 1
+    statsType: 2
     sprite: {fileID: 21300000, guid: 556a47d1f55a3b849b7b53f24ee57733, type: 3}
   materialsSprite:
-    statsType: 2
+    statsType: 3
     sprite: {fileID: 21300000, guid: c9ab3a0a5c57c084da5360a7268c3496, type: 3}

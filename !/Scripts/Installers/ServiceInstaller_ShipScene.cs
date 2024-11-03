@@ -6,16 +6,23 @@ public class ServiceInstaller_ShipScene : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<InputService>().FromNew().AsSingle();
+        InputServiceBind();
         ShipInventoryServiceBind();
-        Container.Bind<GameEventManager>().FromNew().AsSingle();
+        GameEventManagerBind();
+    }
+
+    private void GameEventManagerBind()
+    {
+        Container.BindInterfacesAndSelfTo<GameEventManager>().AsSingle();
+    }
+
+    private void InputServiceBind()
+    {
+        Container.Bind<InputService>().FromNew().AsSingle();
     }
 
     private void ShipInventoryServiceBind()
     {
-        GameProgressData gameProgressData = GameProgressDataIO.LoadData();
-        ShipInventoryService shipInventoryService = new(gameProgressData.ShipInventoryData);
-
-        Container.Bind<ShipInventoryService>().FromInstance(shipInventoryService).AsSingle();
+        Container.Bind<IShipInventoryService>().To<ShipInventoryService>().FromNew().AsSingle();
     }
 }

@@ -6,55 +6,109 @@ public class PlayerInventoryService
 {
     public event Action<List<InventoryItem>> OnInventoryListChanged;
 
-    private Transform _itemHoldPoint;
+    public HandheldItem HandheldItem { get; private set; }
+    public int MaxCapacity { get; private set; } = 5;
+    public Weapon Weapon { get; private set; }
+
+    private WeaponState _weaponState;
+
+    public Transform ItemHoldPoint { get; private set; }
     private Transform _weaponHoldPoint;
     private Transform _weaponIdleHoldPoint;
 
-    private Weapon _weapon = null;
-    private bool _weaponInventoryState = true;
-
-    private HandheldItem _handheldItem;
-
     private List<InventoryItem> _inventoryItemsList;
-    public int _maxItemsCount { get; private set; } = 5;
-    private int _currentItemsCount;
+    private int _currentUsedSpace;
 
     public PlayerInventoryService()
     {
         _inventoryItemsList = new List<InventoryItem>();
     }
 
-    public void SetHoldPoints(IslandPlayerController.HoldPoints holdPoints)
+    public void SetWeapon(Weapon weapon)
     {
-        _itemHoldPoint = holdPoints.itemHoldPoint;
-        _weaponHoldPoint = holdPoints.weaponHoldPoint;
-        _weaponIdleHoldPoint = holdPoints.weaponIdleHoldPoint;
+        if (weapon == null)
+            return;
+
+        if(Weapon == null)
+        {
+            Weapon = weapon;
+            Weapon.SetTriggerState(true);
+
+            SetWeaponState(WeaponState.Active);
+        }
+        else
+        {
+            Weapon.SetParent(null);
+            Weapon.SetTriggerState(false);
+
+            // Convert value from 0-360 to 180-(-180)
+            float yRotation = ItemHoldPoint.rotation.eulerAngles.y;
+            yRotation = (yRotation > 180f) ? yRotation - 360f : yRotation;
+
+            Weapon.transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+            Weapon.transform.position = weapon.transform.position;
+
+            Weapon = null;
+
+            SetWeapon(weapon);
+        }
     }
 
-    public HandheldItem GetHandheldItem()
+    private void SetWeaponState(WeaponState weaponState)
     {
-        return _handheldItem;
+        if (Weapon == null)
+            return;
+
+        _weaponState = weaponState;
+
+        switch(weaponState)
+        {
+            case WeaponState.Active:                
+                Weapon.SetParent(_weaponHoldPoint);
+                break;
+            case WeaponState.Inactive:
+                Weapon.SetParent(_weaponIdleHoldPoint);
+                break;
+        }
+
+        Weapon.ResetTransform(weaponState);
     }
+
+    public bool CanWeaponAttack()
+    {
+        if (Weapon == null)
+            return false;
+
+        if (Weapon.IsAttacking || Weapon.IsWaitingCooldown)
+            return false;
+
+        if (_weaponState == WeaponState.Active)
+            return true;
+        else
+            return false;
+    }
+
     public bool TrySetHandheldItem(HandheldItem handheldItem)
     {
-        if (_handheldItem == null)
+        if (HandheldItem == null)
         {
-            // Player has weapon in hands, let's set idle state for weapon
-            SetWeaponState(false);
-
             // Slot for this item is free
-            _handheldItem = handheldItem;
-            handheldItem.SetParent(_itemHoldPoint);
+            HandheldItem = handheldItem;
+            handheldItem.SetParent(ItemHoldPoint);
+
+            // Player has weapon in hands, let's set inactive state for weapon
+            SetWeaponState(WeaponState.Inactive);
 
             return true;
         }
-        else if(handheldItem.CanBePlaced())
+        else if(handheldItem.CanBePlaced)
         {
             // Slot for this item not free, let's fix it
-            _handheldItem = null;
+            HandheldItem = null;
+            handheldItem.SetParent(null);
 
             // Player dropped item, hands free, let's set active state for weapon
-            SetWeaponState(true);
+            SetWeaponState(WeaponState.Active);
 
             return false;
         }
@@ -65,59 +119,11 @@ public class PlayerInventoryService
         }
     }
 
-    public Weapon GetWeapon()
-    {
-        return _weapon;
-    }
-    public void SetWeapon(Weapon weapon)
-    {
-        if (weapon == null)
-            return;
-
-        if(_weapon == null)
-        {
-            _weapon = weapon;
-
-            SetWeaponState(true);
-            _weapon.TriggerState(true);
-            _weapon.SetParent(_weaponHoldPoint);           
-
-            _weapon.ResetTransform();
-        }
-        else
-        {
-            _weapon.SetParent(null);
-
-            // Convert value from 0-360 to 180-(-180)
-            float yRotation = _itemHoldPoint.rotation.eulerAngles.y;
-            yRotation = (yRotation > 180f) ? yRotation - 360f : yRotation;
-
-            _weapon.transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
-            _weapon.transform.position = weapon.transform.position;
-
-            _weapon.TriggerState(false);
-
-            _weapon = null;
-
-            SetWeapon(weapon);
-        }
-    }
-    public bool CanWeaponAttack()
-    {
-        if (_weapon == null)
-            return false;
-
-        if (_weaponInventoryState && !_weapon.IsAttacking && !_weapon.IsWaitingCooldown)
-            return true;
-        else
-            return false;
-    }
-
     public bool TryAddToInventoryItemsList(InventoryItem item)
     {
-        if (_currentItemsCount + ((InventoryItemSO)item.ItemSO).inventorySpace <= _maxItemsCount)
+        if (_currentUsedSpace + ((InventoryItemSO)item.ItemSO).inventorySpace <= MaxCapacity)
         {
-            _currentItemsCount += ((InventoryItemSO)item.ItemSO).inventorySpace;
+            _currentUsedSpace += ((InventoryItemSO)item.ItemSO).inventorySpace;
 
             _inventoryItemsList.Add(item);
             OnInventoryListChanged?.Invoke(_inventoryItemsList);
@@ -130,25 +136,15 @@ public class PlayerInventoryService
         }
     }
 
-    public bool IsSelectionEnabled()
-    {
-        if (_handheldItem == null)
-            return true;
-        else
-            return false;
-    }
-
-    public void UnboxAll(ShipInventoryService shipInventoryService)
+    public void UnboxAll(ShipZoneInventoryService shipInventoryService)
     {
         UnboxInventoryItems(shipInventoryService);
-        TryUnboxHandheldItem(shipInventoryService);
-
-        shipInventoryService.GetStats();
+        UnboxHandheldItem(shipInventoryService);
 
         OnInventoryListChanged?.Invoke(_inventoryItemsList);
     }
 
-    private void UnboxInventoryItems(ShipInventoryService shipInventoryService)
+    private void UnboxInventoryItems(ShipZoneInventoryService shipInventoryService)
     {
         if (_inventoryItemsList.Count == 0)
             return;
@@ -158,54 +154,35 @@ public class PlayerInventoryService
             _inventoryItemsList[i].Unbox(shipInventoryService);
             _inventoryItemsList.RemoveAt(i);
         }
-        _currentItemsCount = 0;
+        _currentUsedSpace = 0;
     }
-    private bool TryUnboxHandheldItem(ShipInventoryService shipInventoryService)
+
+    private void UnboxHandheldItem(ShipZoneInventoryService shipInventoryService)
     {
-        if (_handheldItem is IUnboxable item)
+        if (HandheldItem == null)
+            return;
+
+        if (HandheldItem is IUnboxable item)
         {
             item.Unbox(shipInventoryService);
-            _handheldItem = null;
+            HandheldItem = null;
 
-            SetWeaponState(true);
-
-            return true;
-        }
-        else
-        {
-            return false;
+            SetWeaponState(WeaponState.Active);
         }
     }
-    private void SetWeaponState(bool state)
+
+    public void SetHoldPoints(HoldPoints holdPoints)
     {
-        if (_weapon == null)
-        {
-            _weaponInventoryState = false;
-            return;
-        }
+        ItemHoldPoint = holdPoints.itemHoldPoint;
+        _weaponHoldPoint = holdPoints.weaponHoldPoint;
+        _weaponIdleHoldPoint = holdPoints.weaponIdleHoldPoint;
+    }
 
-        if (state)
-        {
-            _weaponInventoryState = true;
-
-            _weapon.SetParent(_weaponHoldPoint);
-            _weapon.TriggerState(true);
-
-            _weapon.ResetTransform();
-
-            return;
-        }
-
-        if(!state)
-        {
-            _weaponInventoryState = false;
-
-            _weapon.SetParent(_weaponIdleHoldPoint);
-            _weapon.TriggerState(true);
-
-            _weapon.ResetTransform();
-
-            return;
-        }
+    public bool IsSelectionEnabled()
+    {
+        if (HandheldItem == null)
+            return true;
+        else
+            return false;
     }
 }

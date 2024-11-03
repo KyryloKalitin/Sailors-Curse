@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: Water Bottle
   inventorySpace: 1
   statsList:
-  - statsType: 1
+  - statsType: 2
     statAmount: 2

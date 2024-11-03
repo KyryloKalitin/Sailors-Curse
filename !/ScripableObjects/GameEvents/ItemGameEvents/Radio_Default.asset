@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fcf6827cc020d49b831768c0fa5660, type: 3}
+  m_Name: Radio_Default
+  m_EditorClassIdentifier: 
+  description: "I thought the radio would be useless, maybe just something to rest
+    my feet on. But then I unexpectedly picked up a signal nearby. When I got there,
+    I only found a shipwreck and crates of supplies floating around. I\u2019ll never
+    know if the signal was sent on that day or if I could have found people if I'd
+    arrived sooner. Either way, they don\u2019t need these supplies anymore."
+  statsChanged:
+  - statsType: 1
+    statAmount: 3
+  - statsType: 2
+    statAmount: 3
+  - statsType: 3
+    statAmount: 2
+  rareInventoryItemSO: {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2,
+    type: 2}

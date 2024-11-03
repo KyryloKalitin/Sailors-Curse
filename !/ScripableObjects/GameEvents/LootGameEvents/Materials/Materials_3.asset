@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Materials_3
   m_EditorClassIdentifier: 
-  description: Are ship repair yards called the same as those for cars? However,
-    it doesn't matter. If they existed before, they probably don't exist now. Fortunately,
-    there are plenty of high-quality planks in the warehouse, so I can repair the
-    ship myself.
+  description: "Are ship repair yards called the same as car repair shops? It doesn\u2019t
+    matter. If they were here before, they\u2019re probably gone now. Luckily, there
+    are lots of good planks in the storeroom, so I can fix the ship myself."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: c26fc4943b3ecf64da6974e125ad5eec, type: 2}
     amount: 4

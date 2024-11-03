@@ -1,12 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
+using Zenject;
 
-public class Door : UntakeableItem
+public class Door : SelectableItem, IUntakeableItem
 {
-    public override void Interact()
+    private SceneLoadService _sceneLoader;
+
+    [Inject]
+    public void Construct(SceneLoadService sceneLoadService)
     {
-        SceneManager.LoadScene("IslandScene");
+        _sceneLoader = sceneLoadService;
     }
+
+    public void Interact()
+    {
+        _sceneLoader.Load(SceneLoadService.Scene.Island);
+    }    
 }

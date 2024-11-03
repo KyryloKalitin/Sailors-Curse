@@ -8,8 +8,6 @@ public class CaptainsLogSingleCellUI : MonoBehaviour
     [SerializeField] private Transform _itemContainer;
     [SerializeField] private Transform _itemTemplate;
 
-    private string _STAT_TYPES_SPRITES = "Data/StatTypesSprites";
-
     public void SetEventSO(GameEventSO gameEventSO)
     {
         _eventDescription.text = gameEventSO.description;
@@ -43,29 +41,10 @@ public class CaptainsLogSingleCellUI : MonoBehaviour
                 Transform itemCell = Instantiate(_itemTemplate, _itemContainer);
                 itemCell.gameObject.SetActive(true);
 
-                StatTypesSprites statTypesSprites = Resources.Load<StatTypesSprites>(_STAT_TYPES_SPRITES);
-
-                Sprite itemSprite;
-
-                switch (item.statsType)
-                {
-                    case StatsType.Food:
-                        itemSprite = statTypesSprites.foodSprite.sprite;
-                        break;
-                    case StatsType.Water:
-                        itemSprite = statTypesSprites.waterSprite.sprite;
-                        break;
-                    case StatsType.Material:
-                        itemSprite = statTypesSprites.materialsSprite.sprite;
-                        break;
-                    default:
-                        itemSprite = statTypesSprites.foodSprite.sprite;
-                        break;
-                }
+                Sprite itemSprite = StatSpriteLoader.GetSpriteByType(item.statsType);
 
                 itemCell.GetComponent<CaptainsLogSingleItemUI>().SetValues(item.statAmount, itemSprite);
             }
         }
-
     }
 }

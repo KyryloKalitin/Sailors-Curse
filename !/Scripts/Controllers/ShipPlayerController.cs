@@ -17,43 +17,50 @@ public class ShipPlayerController : PlayerController
         _playerState._currentSecondaryPlayerState = PlayerState.FreeHands;
     }
 
+    #region Lifecycle methods
+
     private void Start()
     {
         _cameraController.OnSelectedItem += _cameraController_OnSelectedItem;
 
         _inputService.playerInput.Interactions.Interact.performed += Interact_performed;
-        _inputService.SetMovementEnabled(true);
+        _inputService.EnableMovement(true);
     }
 
     private void OnDestroy()
     {
         _cameraController.OnSelectedItem -= _cameraController_OnSelectedItem;
         _inputService.playerInput.Interactions.Interact.performed -= Interact_performed;
-
-        _inputService.SetMovementEnabled(false);
     }
 
-    protected void Interact_performed(InputAction.CallbackContext obj)
+    #endregion
+
+    #region Event handlers
+
+    private void Interact_performed(InputAction.CallbackContext obj)
     {
         if (_selectedItem != null)
         {
-            UntakeableItem selectedItem = _selectedItem as UntakeableItem;
-
-            if(selectedItem != null)
-                selectedItem.Interact();
+            IUntakeableItem selectedItem = _selectedItem as IUntakeableItem;
+            selectedItem?.Interact();
         }
     }
 
     protected void _cameraController_OnSelectedItem(SelectableItem item)
     {
         _lastSelectedItem = _selectedItem;
-
         _selectedItem = item;
 
-        if (_selectedItem != null)
-            _selectedItem.SetSelectionState(true);
+        UpdateSelection();
+    }
 
-        if (_lastSelectedItem != null && _lastSelectedItem != _selectedItem)
-            _lastSelectedItem.SetSelectionState(false);
+    #endregion
+
+    private void UpdateSelection()
+    {
+        _selectedItem?.SetSelectionState(true);
+
+        if (_lastSelectedItem != _selectedItem)
+            _lastSelectedItem?.SetSelectionState(false);
     }
 }

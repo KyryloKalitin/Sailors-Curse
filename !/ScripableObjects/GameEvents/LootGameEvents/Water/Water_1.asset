@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Water_1
   m_EditorClassIdentifier: 
-  description: I scoured every corner of the ship in hopes of finding even a drop
-    of fresh water, but to no avail. My last hope is the fire suppression reservoirs.
-    I hope this is drinkable...
+  description: "I searched every corner of the ship, hoping to find even a drop of
+    fresh water, but found nothing. My last hope is the fire suppression tanks. I
+    just hope it\u2019s safe to drink..."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 4f1c3d29e4a63b2429d4d1f8abd58ab2, type: 2}
     amount: 4

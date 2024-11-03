@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: NailWound
   m_EditorClassIdentifier: 
-  description: While cleaning the deck, I came across a lone protruding nail. I had
-    to rinse the wound with fresh water and remove the nail.
+  description: While cleaning the deck, I got hurt by a sharp nail sticking out.
+    I had to wash the wound with fresh water and remove the nail.
   statsChanged:
-  - statsType: 1
-    statAmount: -2
   - statsType: 2
+    statAmount: -2
+  - statsType: 3
     statAmount: -2

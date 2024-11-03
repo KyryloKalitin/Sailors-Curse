@@ -16,5 +16,5 @@ MonoBehaviour:
   sprite: {fileID: 0}
   itemName: Barrel Fish
   statsList:
-  - statsType: 0
+  - statsType: 1
     statAmount: 5

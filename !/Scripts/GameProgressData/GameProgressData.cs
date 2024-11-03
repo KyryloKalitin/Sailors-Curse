@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public struct GameProgressData
 {
@@ -7,11 +9,11 @@ public struct GameProgressData
 
     public int DaysAmount;
 
-    public GameProgressData(ShipInventoryData shipInventoryData, PlayerStatsData playerStatsData, LastGameEvents lastGameEvents, int daysAmount)
+    public GameProgressData(ShipInventoryService shipInventoryService, PlayerStatsService playerStatsService, int daysAmount, List<GameEventSO> lastGameEvents = null)
     {
-        ShipInventoryData = shipInventoryData;
-        PlayerStatsData = playerStatsData;
-        LastGameEvents = lastGameEvents;
+        ShipInventoryData = new(shipInventoryService);
+        PlayerStatsData = new(playerStatsService);
+        LastGameEvents = new(lastGameEvents);
         DaysAmount = daysAmount;
     }
 }

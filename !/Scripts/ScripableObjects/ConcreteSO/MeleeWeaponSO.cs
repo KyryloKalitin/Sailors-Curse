@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class MeleeWeaponSO : WeaponSO
 {
-    public float coolDawn;
+    public float coolDown;
 }

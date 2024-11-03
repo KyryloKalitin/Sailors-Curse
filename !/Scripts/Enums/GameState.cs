@@ -2,7 +2,6 @@
 {
     None,
 
-    WaitingToStart,
     CountdownToStart,
     GamePlaying,
 

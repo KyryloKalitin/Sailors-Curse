@@ -16,4 +16,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   itemName: Bat
   damage: 4
-  coolDawn: 1
+  holdingPosition: {x: -0.012, y: -0.11, z: 0.307}
+  holdingRotation: {x: 0, y: 0, z: 0, w: 1}
+  hiddenPosition: {x: -0, y: -0, z: -0.165}
+  hiddenRotation: {x: 0.6830118, y: -0.18301211, z: -0.18301265, w: 0.68301386}
+  coolDown: 0

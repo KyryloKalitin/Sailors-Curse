@@ -2,28 +2,19 @@ using UnityEngine;
 
 public class InputService 
 {
-    public PlayerInputActions playerInput;
+    public PlayerInput playerInput;
 
     public float xMouseSensitivity { get; private set; } = 0.1f;
     public float yMouseSensitivity { get; private set; } = 0.1f;
 
-    private InputService()
+    public InputService()
     {
-        playerInput = new PlayerInputActions();
-
-        playerInput.CameraLook.Enable();
-        playerInput.Interactions.Enable();
-        playerInput.Attack.Enable();
-
-        playerInput.Movement.Jump.Enable();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        playerInput = new PlayerInput();
     }
 
     public Vector2 GetMovementNormalizedVector()
     {
-        Vector2 inputVector = playerInput.Movement.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = playerInput.Movement.Move.ReadValue<Vector2>();
         inputVector = inputVector.normalized;
 
         return inputVector;
@@ -36,15 +27,30 @@ public class InputService
         return mouseVector;
     }
 
-    public void SetMovementEnabled(bool isEnabled)
+    public void SetCursorMode(CursorMode cursorMode)
     {
-        if (isEnabled)
-            playerInput.Movement.Movement.Enable();
-        else
-            playerInput.Movement.Movement.Disable();
+        switch(cursorMode)
+        {
+            case CursorMode.Game:
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                break;
+            case CursorMode.Menu:
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
+        }
     }
 
-    public void SetLookingEnabled(bool isEnabled)
+    public void EnableMovement(bool isEnabled)
+    {
+        if (isEnabled)
+            playerInput.Movement.Enable();
+        else
+            playerInput.Movement.Disable();
+    }
+
+    public void EnableCameraLook(bool isEnabled)
     {
         if (isEnabled)
             playerInput.CameraLook.Enable();
@@ -52,19 +58,27 @@ public class InputService
             playerInput.CameraLook.Disable();
     }
 
-    public void SetCursorEnabled(bool isEnable)
+    public void EnableInteractions(bool isEnabled)
     {
-        if(isEnable)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        if (isEnabled)
+            playerInput.Interactions.Enable();
         else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
+            playerInput.Interactions.Disable();
     }
 
+    public void EnableAttack(bool isEnabled)
+    {
+        if (isEnabled)
+            playerInput.Attack.Enable();
+        else
+            playerInput.Attack.Disable();
+    }
+
+    public void EnableExit(bool isEnabled)
+    {
+        if (isEnabled)
+            playerInput.Exit.Enable();
+        else
+            playerInput.Exit.Disable();
+    }
 }

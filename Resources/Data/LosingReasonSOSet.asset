@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d348fc34947c7f48a97688da35c4cac, type: 3}
+  m_Name: LosingReasonSOSet
+  m_EditorClassIdentifier: 
+  losingReasonsList:
+  - reason: 1
+    description: The ship ran out of food.
+  - reason: 2
+    description: The ship ran out of water.
+  - reason: 3
+    description: The ship is out of materials.
+  - reason: 4
+    description: "You didn\u2019t make it back to the ship in time."
+  - reason: 5
+    description: You're dead.

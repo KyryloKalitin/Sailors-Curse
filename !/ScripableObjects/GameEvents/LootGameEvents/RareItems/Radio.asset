@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Radio
   m_EditorClassIdentifier: 
-  _description: WHAT THE HELL? A radio... I found a radio. Well, of course, in a
-    sunken world, there are still so many people to communicate with. I'm thrilled
-    with the find (no, I'm not thrilled).
+  description: "What the hell? I found a radio. Of course, in a sunken world, there
+    are still so many people to talk to. I\u2019m excited about this find (no, I\u2019m
+    not really excited)."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2, type: 2}
     amount: 1

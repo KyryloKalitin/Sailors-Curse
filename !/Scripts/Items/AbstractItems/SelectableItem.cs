@@ -4,7 +4,7 @@ using UnityEngine;
 [SelectionBase]
 public abstract class SelectableItem : MonoBehaviour
 {
-    private Material _material = null;
+    private Material _material;
     private const string _EMISSION_MULTIPLIER = "_EmissionMultiplier";
 
     protected virtual void Awake()

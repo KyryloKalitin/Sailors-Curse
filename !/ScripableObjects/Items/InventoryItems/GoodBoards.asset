@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: Good Boards
   inventorySpace: 2
   statsList:
-  - statsType: 2
+  - statsType: 3
     statAmount: 3

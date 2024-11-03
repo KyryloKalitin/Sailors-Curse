@@ -3,9 +3,8 @@ using UnityEngine;
 public class SimpleHandheldItem : HandheldItem, IUnboxable
 {
     [SerializeField] private SimpleHandheldItemSO simpleHandheldItemSO;
-    public override _ItemSO ItemSO { get => simpleHandheldItemSO; }
 
-    public void Unbox(ShipInventoryService shipInventoryService)
+    public void Unbox(ShipZoneInventoryService shipInventoryService)
     {
         shipInventoryService.UpdateStats(simpleHandheldItemSO.statsList);
         

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Heat
   m_EditorClassIdentifier: 
   description: That was the hottest day of my life. I could call it hell, but the
-    real hell began when I found myself at sea. In addition to increased water consumption
-    due to the heat, some of the food spoiled.
+    real hell started when I was at sea. Because of the heat, I had to drink more
+    water, and some of the food went bad.
   statsChanged:
-  - statsType: 0
-    statAmount: -3
   - statsType: 1
+    statAmount: -3
+  - statsType: 2
     statAmount: -2

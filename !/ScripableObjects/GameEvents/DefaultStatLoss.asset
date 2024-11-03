@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: DefaultStatLoss
   m_EditorClassIdentifier: 
-  _description: 
+  description: Default use of resources, without outside factors.
   statsChanged:
-  - statsType: 0
-    statAmount: -3
   - statsType: 1
     statAmount: -3
   - statsType: 2
+    statAmount: -3
+  - statsType: 3
     statAmount: -3

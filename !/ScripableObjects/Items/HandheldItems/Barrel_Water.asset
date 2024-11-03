@@ -16,5 +16,5 @@ MonoBehaviour:
   sprite: {fileID: 0}
   itemName: Barrel Water
   statsList:
-  - statsType: 1
+  - statsType: 2
     statAmount: 5

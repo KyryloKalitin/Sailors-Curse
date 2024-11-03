@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: Can
   inventorySpace: 1
   statsList:
-  - statsType: 0
+  - statsType: 1
     statAmount: 2

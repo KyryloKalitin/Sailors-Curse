@@ -1,4 +1,4 @@
 public interface IUnboxable
 {
-    public void Unbox(ShipInventoryService shipInventory);
+    public void Unbox(ShipZoneInventoryService shipInventory);
 }

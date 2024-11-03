@@ -9,8 +9,10 @@ public class FPSCameraController : MonoBehaviour
     private float _maxInteractionDistance = 2f;
     private float _xRotation;
 
-    private LayerMask _playerLayer;
-    private const string _PLAYER_LAYER_NAME = "Player";
+    private LayerMask _ignoredLayersMask;
+
+    private const string _playerLayerName = "Player";
+    private const string _ignoreRaycastLayerName = "Ignore Raycast";
 
     private InputService _inputService;
 
@@ -22,7 +24,7 @@ public class FPSCameraController : MonoBehaviour
 
     private void Awake()
     {
-        _playerLayer = LayerMask.NameToLayer(_PLAYER_LAYER_NAME);
+        _ignoredLayersMask = ~LayerMask.GetMask(_playerLayerName, _ignoreRaycastLayerName);
     }
 
     private void LateUpdate()
@@ -36,14 +38,14 @@ public class FPSCameraController : MonoBehaviour
         Vector2 mouseVector = _inputService.GetMouseVector();
 
         _xRotation -= mouseVector.y * _inputService.yMouseSensitivity;
-        _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
+        _xRotation = Mathf.Clamp(_xRotation, -70f, 70f);
 
         transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
     }
 
     private void InteractionHandler()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _maxInteractionDistance, _playerLayer))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _maxInteractionDistance, _ignoredLayersMask))
         {
             if (hit.collider.TryGetComponent <SelectableItem> (out var item))
                 OnSelectedItem?.Invoke(item);

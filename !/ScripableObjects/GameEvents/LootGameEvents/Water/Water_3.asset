@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043a777ab828fc24bbe30424bf22d162, type: 3}
   m_Name: Water_3
   m_EditorClassIdentifier: 
-  description: Did I find mountains of fresh drinking water in the storeroom? Yes,
-    I did, and I'm not ashamed to boast about it! I'm grateful for as long as I have
-    something to...
+  description: "Did I find lots of fresh drinking water in the storeroom? Yes, I
+    did, and I\u2019m not ashamed to say it! I\u2019m thankful as long as I have
+    something to drink..."
   inventoryItemsSOList:
   - inventoryItemSO: {fileID: 11400000, guid: 4f1c3d29e4a63b2429d4d1f8abd58ab2, type: 2}
     amount: 6

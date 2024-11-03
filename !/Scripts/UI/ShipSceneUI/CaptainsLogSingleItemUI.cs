@@ -9,7 +9,11 @@ public class CaptainsLogSingleItemUI : MonoBehaviour
 
     public void SetValues(int amount, Sprite sprite)
     {
-        _itemAmount.text = amount.ToString();
+        if (amount > 0)
+            _itemAmount.text = "+" + amount.ToString();
+        else
+            _itemAmount.text = amount.ToString();
+        
         _itemIcon.sprite = sprite;
     }
 }

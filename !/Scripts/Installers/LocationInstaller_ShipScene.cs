@@ -9,16 +9,28 @@ public class LocationInstaller_ShipScene : MonoInstaller
     public override void InstallBindings()
     {
         PlayerBind();
+        SceneLoaderBind();
     }
 
     private void PlayerBind()
     {
         ShipPlayerController playerController = Container
-            .InstantiatePrefabForComponent<ShipPlayerController>(_playerPrefab, _playerSpawnPoint.position, Quaternion.Euler(new Vector3(0f,-90f,0f)), null);
+            .InstantiatePrefabForComponent<ShipPlayerController>(_playerPrefab, _playerSpawnPoint.position, _playerSpawnPoint.rotation, null);
 
         Container
             .Bind<PlayerController>()
             .FromInstance(playerController)
+            .AsSingle()
+            .NonLazy();
+    }
+
+    private void SceneLoaderBind()
+    {
+        var sceneLoader = Container.InstantiateComponentOnNewGameObject<SceneLoadService>("SceneLoader");
+
+        Container
+            .Bind<SceneLoadService>()
+            .FromInstance(sceneLoader)
             .AsSingle()
             .NonLazy();
     }

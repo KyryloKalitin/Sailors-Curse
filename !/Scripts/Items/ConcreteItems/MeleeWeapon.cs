@@ -1,14 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using Zenject;
 
 public class MeleeWeapon : Weapon
 {
+    public override WeaponSO WeaponSO => meleeWeaponSO;
     [SerializeField] private MeleeWeaponSO meleeWeaponSO;
-    public override _ItemSO ItemSO { get => meleeWeaponSO; }
 
-    public override bool IsAttacking { get; protected set; } = false;
-    public override bool IsWaitingCooldown { get; protected set; } = false;
+    public override bool IsAttacking { get; protected set; } 
+    public override bool IsWaitingCooldown { get; protected set; } 
 
     private float _animationDuration = 1f;
     private float _animationDelay = 0.3f;
@@ -61,6 +60,7 @@ public class MeleeWeapon : Weapon
 
         enemy.ApplyDamage(meleeWeaponSO.damage, DamageType.None);
     }
+
     private IEnumerator SetAttackState()
     {
         IsAttacking = true;
@@ -71,11 +71,12 @@ public class MeleeWeapon : Weapon
 
         StartCoroutine(CooldownWaiting());
     }
+
     private IEnumerator CooldownWaiting()
     {
         IsWaitingCooldown = true;
 
-        yield return new WaitForSeconds(meleeWeaponSO.coolDawn);
+        yield return new WaitForSeconds(meleeWeaponSO.coolDown);
 
         IsWaitingCooldown = false;
 

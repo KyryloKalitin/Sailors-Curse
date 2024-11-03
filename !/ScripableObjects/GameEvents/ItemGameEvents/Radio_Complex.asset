@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803f04f877187ad46b8ee36b454f3f3a, type: 3}
   m_Name: Radio_Complex
   m_EditorClassIdentifier: 
-  description: During the night, I was awakened by a signal from the radio. It conveyed
-    coordinates of a nuclear station where an accident occurred. I believe the signal
-    was sent automatically, without human assistance, and the station has long been
-    underwater. I won't take the risk and will sail around that area.
+  description: "At night, a signal from the radio woke me up. It gave the location
+    of a nuclear station where there was an accident. I think the signal was sent
+    automatically, with no people involved, and that the station has been underwater
+    for a long time. I won\u2019t take any risks and will sail around that area."
   statsChanged: []
   rareInventoryItemSO: {fileID: 11400000, guid: 24f00224c6f03924aa660261930a49e2,
     type: 2}
-  alternativeItemGameEventSO: {fileID: 11400000, guid: c3011fab22043094d817f1562ba6fe65,
+  alternativeGameEventSO: {fileID: 11400000, guid: 7c4db8cd135b50844899cb349c4f575f,
     type: 2}

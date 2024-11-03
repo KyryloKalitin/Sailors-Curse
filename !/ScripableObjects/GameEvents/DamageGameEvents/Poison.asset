@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e7ca7d1410f1743951fad21893759c, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  _description: 
+  description: 
   statsChanged:
-  - statsType: 1
-    statAmount: 5
+  - statsType: 2
+    statAmount: -5
   damageType: 2

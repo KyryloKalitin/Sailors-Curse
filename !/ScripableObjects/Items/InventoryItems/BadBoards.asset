@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: Bad Boards
   inventorySpace: 1
   statsList:
-  - statsType: 2
+  - statsType: 3
     statAmount: 1

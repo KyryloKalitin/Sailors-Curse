@@ -4,10 +4,22 @@ using Zenject;
 
 public class PlayerAnimationUpdater : MonoBehaviour
 {
-    [SerializeField]private PlayerController _playerController;
+    [SerializeField] private PlayerController _playerController;
 
     private Dictionary<PlayerState, string> _statesList;
     private Animator _animator;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+
+        SetStateDictionary();
+    }
+
+    private void Start()
+    {
+        _playerController.OnChangedPlayerState += _playerController_OnChangedPlayerState;
+    }
 
     private void SetStateDictionary()
     {
@@ -21,18 +33,6 @@ public class PlayerAnimationUpdater : MonoBehaviour
         _statesList.Add(PlayerState.HasWeapon,  "HasWeapon");
         _statesList.Add(PlayerState.HasItem,    "HasItem");
         _statesList.Add(PlayerState.FreeHands, "FreeHands");
-    }
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-
-        SetStateDictionary();
-    }
-
-    private void Start()
-    {
-        _playerController.OnChangedPlayerState += _playerController_OnChangedPlayerState;
     }
 
     private void _playerController_OnChangedPlayerState(CompositePlayerState state)

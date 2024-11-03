@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb475ccb05a5b7144991cdc831e77ce7, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  description: During the rocking, a lamp fell from the wall, igniting the floor.
-    Luckily, I was nearby and extinguished the fire, but it's a pity that only fresh
-    water was at hand.
+  description: While the ship rocked, a lamp fell from the wall and started a fire
+    on the floor. Luckily, I was nearby and put it out, but I only had fresh water
+    to use.
   statsChanged:
-  - statsType: 1
+  - statsType: 2
     statAmount: -3

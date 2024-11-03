@@ -22,7 +22,7 @@ public static class GameProgressDataIO
     {
         GameProgressData gameProgressData;
 
-        if(File.Exists(_gameProgressDataPath))
+        if(HasSavedGameProgress())
         {
             string jsonData = File.ReadAllText(_gameProgressDataPath);
 
@@ -30,14 +30,17 @@ public static class GameProgressDataIO
         }
         else
         {
-            gameProgressData = new( new ShipInventoryData   (new ShipInventoryService()),
-                                    new PlayerStatsData     (new PlayerStatsService()),
-                                    new LastGameEvents      (new List<GameEventSO>()), 0);
+            gameProgressData = new(new ShipInventoryService(), new PlayerStatsService(), 1, new List<GameEventSO>());
 
             SaveData(gameProgressData);
         }
 
         return gameProgressData;
+    }
+
+    public static bool HasSavedGameProgress()
+    {
+        return File.Exists(_gameProgressDataPath);
     }
 
     public static void DeleteGameProgressData()

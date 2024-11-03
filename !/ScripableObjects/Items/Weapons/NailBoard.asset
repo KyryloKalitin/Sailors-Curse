@@ -16,4 +16,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   itemName: Nail Board
   damage: 2
-  coolDawn: 0
+  holdingPosition: {x: -0.004, y: 0.03, z: 0.263}
+  holdingRotation: {x: 0, y: 0, z: -1, w: 0}
+  hiddenPosition: {x: -0, y: 0, z: 0.008}
+  hiddenRotation: {x: -0.18307437, y: -0.6829014, z: 0.6830783, w: 0.1831218}
+  coolDown: 0
